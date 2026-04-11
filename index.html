@@ -638,39 +638,52 @@
         <input class="combo-custom" id="gloveModelCustom" placeholder="모델명 직접 입력...">
       </div>
       <div class="combo-wrap"><label>Glove Type</label>
-        <select id="gloveTypeSelect" onchange="handleCombo('gloveType')">
+        <select id="gloveTypeSelect" onchange="handleCombo('gloveType');if(typeof toggleCatcherOptions==='function')toggleCatcherOptions();if(typeof rebuildWebStyleOptions==='function')rebuildWebStyleOptions();if(typeof rebuildGloveSizeOptions==='function')rebuildGloveSizeOptions();if(typeof buildColorGrid==='function')buildColorGrid();if(typeof generatePreview==='function')generatePreview();">
           <option value="Infield">Infield</option><option value="Outfield">Outfield</option>
+          <option value="Catcher">Catcher</option><option value="Firstbase Open">Firstbase Open</option><option value="Firstbase Close">Firstbase Close</option>
           <option value="__custom__">기타 (직접 입력)</option>
         </select>
         <input class="combo-custom" id="gloveTypeCustom" placeholder="타입 직접 입력...">
       </div>
       <div class="field"><label>Glove Sport</label><select id="gloveSport"><option>Baseball</option><option>Softball</option></select></div>
-      <div class="field"><label>Glove Size</label>
-        <select id="gloveSize"><option>11.25</option><option>11.5</option><option>11.75</option><option>12</option><option>12.25</option><option>12.5</option><option>12.75</option><option>13</option><option>13.25</option><option>13.5</option><option>13.75</option><option>14</option></select>
+      <div class="combo-wrap"><label>Glove Size</label>
+        <select id="gloveSizeSelect" onchange="handleCombo('gloveSize');if(typeof generatePreview==='function')generatePreview();">
+          <option>11.25</option><option>11.5</option><option>11.75</option><option>12</option><option>12.25</option><option>12.5</option><option>12.75</option><option>13</option><option>13.25</option><option>13.5</option><option>13.75</option><option>14</option>
+          <option value="__custom__">기타 (직접 입력)</option>
+        </select>
+        <input class="combo-custom" id="gloveSizeCustom" placeholder="사이즈 직접 입력...">
       </div>
     </div>
     <div class="section-title">글러브 옵션</div>
     <div class="grid2">
       <div class="field"><label>Glove Stiffness</label><select id="stiffness"><option>Ultra</option><option>Standard</option><option>Game Ready</option></select></div>
-      <div class="field"><label>Wrist Type</label><select id="wristType"><option>Traditional</option><option>One-Piece</option></select></div>
-      <div class="field" style="grid-column:span 2"><label>Web Style</label>
-        <select id="webStyle">
-          <option>I-Web</option><option>I-Web (No Logo)</option><option>1-Piece Full Web + Graphic</option><option>I-Web - Spiral Lace</option><option>H-Web</option><option>The Scottie</option><option>Y-Web</option><option>E-Web</option><option>Laced H-Web</option><option>V-Web</option><option>Mod V-Web</option><option>T-Web</option><option>Net Web</option><option>Basket Web</option><option>Hinge Post Web</option><option>Dual-Hinge Web</option><option>Mod T Web</option><option>Mod Loop Web</option><option>Cross Web</option><option>Laced Cross Web</option><option>Mod Cross Web</option><option>Victory Web</option><option>1-Piece Web</option><option>1-Piece Web - Spiral Lace</option><option>2-Piece Web</option><option>Diamond Web</option><option>Helix Web</option><option>Spear Web</option><option>44 Logo Web</option><option>1-Piece Full Web</option><option>Double V-Web</option><option>Laced I-Web</option><option>Mod I-Web</option><option>X Laced 2-Piece Web</option><option>Baseball Web</option><option>Post Web</option>
+      <div class="field"><label>Wrist Type</label><select id="wristTypeSelect" onchange="handleCombo('wristType')"><option>Traditional</option><option>One-Piece</option><option value="__custom__">기타 (직접 입력)</option></select><input class="custom-input" id="wristTypeCustom" placeholder="Wrist Type 직접 입력..."></div>
+      <div class="field" id="webStyleWrap" style="grid-column:span 2"><label>Web Style</label>
+        <select id="webStyleSelect" onchange="handleCombo('webStyle')">
+          <option>I-Web</option><option>I-Web (No Logo)</option><option>1-Piece Full Web + Graphic</option><option>I-Web - Spiral Lace</option><option>H-Web</option><option>The Scottie</option><option>Y-Web</option><option>E-Web</option><option>Laced H-Web</option><option>V-Web</option><option>Mod V-Web</option><option>T-Web</option><option>Net Web</option><option>Basket Web</option><option>Hinge Post Web</option><option>Dual-Hinge Web</option><option>Mod T Web</option><option>Mod Loop Web</option><option>Cross Web</option><option>Laced Cross Web</option><option>Mod Cross Web</option><option>Victory Web</option><option>1-Piece Web</option><option>1-Piece Web - Spiral Lace</option><option>2-Piece Web</option><option>Diamond Web</option><option>Helix Web</option><option>Spear Web</option><option>44 Logo Web</option><option>1-Piece Full Web</option><option>Double V-Web</option><option>Laced I-Web</option><option>Mod I-Web</option><option>X Laced 2-Piece Web</option><option>Baseball Web</option><option>Post Web</option><option value="__custom__">기타 (직접 입력)</option>
         </select>
+        <input class="custom-input" id="webStyleCustom" placeholder="Web Style 직접 입력...">
       </div>
       <div class="field"><label>Throwing Hand</label><select id="throwingHand"><option>Right</option><option>Left</option></select></div>
-      <div class="field"><label>Finger Hood or Pad</label><select id="fingerHood" onchange="buildColorGrid()"><option>None</option><option>Hood</option><option>Pad</option></select></div>
+      <div class="field"><label>Finger Hood or Pad</label><select id="fingerHood" onchange="handleFingerHoodChange()"><option>None</option><option>Hood</option><option>Pad</option></select></div>
+      <div class="field" id="hoodPadPlacementWrap" style="display:none"><label>Finger Hood or Pad Placement</label>
+        <select id="hoodPadPlacement" onchange="handleSelectCustom('hoodPadPlacement','hoodPadPlacementCustom')">
+          <option value="Index">Index</option><option value="Middle">Middle</option><option value="__custom__">직접 입력</option>
+        </select>
+        <input class="custom-input" id="hoodPadPlacementCustom" placeholder="Placement 직접 입력...">
+      </div>
       <div class="field"><label>Lace Length</label><select id="laceLength"><option>Normal</option><option>Long</option></select></div>
       <div class="field">
         <label>Logo Style</label>
         <select id="logoStyle" onchange="handleLogoStyle()">
-          <option value="Embroidered">Embroidered</option><option value="Embroidered Flag">Embroidered Flag</option><option value="3D Logo">3D Logo</option><option value="Stamped">Stamped</option><option value="Patch">Patch</option><option value="Leather Patch">Leather Patch</option>
+          <option value="Embroidered">Embroidered</option><option value="Embroidered Flag">Embroidered Flag</option><option value="3D Logo">3D Logo</option><option value="Stamped">Stamped</option><option value="Patch">Patch</option><option value="Leather Patch">Leather Patch</option><option value="__custom__">기타 (직접 입력)</option>
         </select>
         <div class="patch-wrap" id="patchWrap">
           <div class="patch-row"><input type="text" id="patchText" placeholder="패치 내용 입력..."><span class="patch-suffix" id="patchSuffix">Patch</span></div>
         </div>
+        <input class="custom-input" id="logoStyleCustom" placeholder="Logo Style 직접 입력...">
       </div>
-      <div class="field"><label>Wrist Lining</label><select id="wristLining"><option>Traditional Fur</option><option>Moisture Wicking Performance Wrist Pad</option></select></div>
+      <div class="field"><label>Wrist Lining</label><select id="wristLiningSelect" onchange="handleCombo('wristLining')"><option>Traditional Fur</option><option>Moisture Wicking Performance Wrist Pad</option><option value="__custom__">기타 (직접 입력)</option></select><input class="custom-input" id="wristLiningCustom" placeholder="Wrist Lining 직접 입력..."></div>
     </div>
     <div class="section-title">추가 옵션</div>
     <div style="display:flex;flex-direction:column;gap:6px">
@@ -681,6 +694,10 @@
       <div class="toggle-row"><span class="toggle-label">Dual Welting</span><label class="toggle"><input type="checkbox" id="dualWelting" onchange="buildColorGrid()"><span class="slider-sw"></span></label></div>
       <div class="toggle-row"><span class="toggle-label">Enable Inlay</span><label class="toggle"><input type="checkbox" id="enableInlay" onchange="buildColorGrid()"><span class="slider-sw"></span></label></div>
       <div class="toggle-row"><span class="toggle-label">Enable Tricolor Laces</span><label class="toggle"><input type="checkbox" id="tricolorLaces" onchange="buildColorGrid()"><span class="slider-sw"></span></label></div>
+      <div id="catcherOnlyOptions" style="display:none;flex-direction:column;gap:6px">
+        <div class="toggle-row"><span class="toggle-label">Velcro Wrist</span><label class="toggle"><input type="checkbox" id="velcroWrist"><span class="slider-sw"></span></label></div>
+        <div class="toggle-row"><span class="toggle-label">Wrist Guard</span><label class="toggle"><input type="checkbox" id="wristGuard"><span class="slider-sw"></span></label></div>
+      </div>
     </div>
     <button class="btn-generate" onclick="switchTab('colors')">다음: 색상 설정 →</button>
   </div>
@@ -695,6 +712,7 @@
         <div class="color-field">
           <label>Inlay Color</label>
           <div class="color-row"><div class="color-preview" id="prev-inlayColor" style="background:#1a1a1a"></div><select id="inlayColor" onchange="updateColorPreview('inlayColor')"></select></div>
+          <input class="custom-input" id="inlayColor_custom" placeholder="색상 직접 입력..." style="display:none">
         </div>
       </div>
     </div>
@@ -704,14 +722,17 @@
         <div class="color-field">
           <label>Web &amp; Finger Laces Color</label>
           <div class="color-row"><div class="color-preview" id="prev-webFingerLaces" style="background:#F472B6"></div><select id="webFingerLaces" onchange="updateColorPreview('webFingerLaces')"></select></div>
+          <input class="custom-input" id="webFingerLaces_custom" placeholder="색상 직접 입력..." style="display:none">
         </div>
         <div class="color-field">
           <label>Palm Laces Color</label>
           <div class="color-row"><div class="color-preview" id="prev-palmLaces" style="background:#F472B6"></div><select id="palmLaces" onchange="updateColorPreview('palmLaces')"></select></div>
+          <input class="custom-input" id="palmLaces_custom" placeholder="색상 직접 입력..." style="display:none">
         </div>
         <div class="color-field">
           <label>Wrist &amp; Wingtip Laces Color</label>
           <div class="color-row"><div class="color-preview" id="prev-wristWingtipLaces" style="background:#F472B6"></div><select id="wristWingtipLaces" onchange="updateColorPreview('wristWingtipLaces')"></select></div>
+          <input class="custom-input" id="wristWingtipLaces_custom" placeholder="색상 직접 입력..." style="display:none">
         </div>
       </div>
     </div>
@@ -831,7 +852,7 @@
     <div class="section-title">주문 정보</div>
     <div class="grid2">
       <div class="field"><label>Order Type</label><input type="text" id="orderNum" value=""></div>
-      <div class="field"><label>Glove ID / Design #</label><input type="text" id="gloveId" value="4382812"></div>
+      <div class="field"><label>Glove ID / Design #</label><input type="text" id="gloveId" value="" placeholder="Glove ID 입력..."></div>
     </div>
     <button class="btn-generate" onclick="switchTab('preview');generatePreview()">오더지 미리보기 생성</button>
   </div>
@@ -2107,19 +2128,106 @@ const dwFields=[
 ];
 const nDef={n_logoColor:'Pink',n_logoOutlineColor:'Pink',n_lacesColor:'Pink',n_stitchingColor:'Pink',n_webColor:'Sky Blue',n_weltingColor:'Pink',n_palmLeatherColor:'Pink',n_kipPalmLinerColor:'Tan',n_backLeather1:'Sky Blue',n_backLeather2:'Pink',n_backLeather3:'Sky Blue',n_backLeather4:'Pink',n_backLeather5:'Sky Blue',n_backLeather6:'Pink',n_backLeather7:'Sky Blue',n_backLeather8:'Pink',n_bindingColor:'Sky Blue',n_wristColor:'Sky Blue',n_wingTipThumb:'Pink',n_wingTipPinky:'Sky Blue',n_hoodColor:'Pink',n_padColor:'Pink',n_homeplateColor:'Pink'};
 const dwDef={dw_logoColor:'Pink',dw_lacesColor:'Pink',dw_stitchingColor:'Pink',dw_silver:'Silver',dw_webColor:'Sky Blue',dw_weltingColor:'Pink',dw_fingerStripColor:'Pink',dw_palmLeatherColor:'Pink',dw_backLeather1:'Sky Blue',dw_bindingColor:'Sky Blue',dw_wristColor:'Sky Blue',dw_wingTipThumb:'Pink',dw_wingTipPinky:'Sky Blue'};
+const firstbaseFields=[
+  {id:'fb_fingerPadColor',label:'Finger Pad Color',type:'leather'},
+  {id:'fb_lacesColor',label:'Laces Color',type:'lace'},
+  {id:'fb_stitchingColor',label:'Stitching Color',type:'stitching'},
+  {id:'fb_webCrownColor',label:'Web Crown Color',type:'webcrown'},
+  {id:'fb_webColor',label:'Web Color',type:'leather'},
+  {id:'fb_palmLeatherColor',label:'Palm Leather Color',type:'palm'},
+  {id:'fb_backLeather1',label:'Back Leather 1 Color',type:'leather'},
+  {id:'fb_bindingColor',label:'Binding Color',type:'binding'},
+  {id:'fb_wristColor',label:'Wrist Color',type:'leather'},
+];
+const fbDef={fb_fingerPadColor:'Blonde',fb_lacesColor:'Tan',fb_stitchingColor:'Forest Green',fb_webCrownColor:'Blonde',fb_webColor:'Forest Green',fb_palmLeatherColor:'Blonde',fb_backLeather1:'Blonde',fb_bindingColor:'Red',fb_wristColor:'Blonde'};
+const catcherFields=[
+  {id:'c_logoColor',label:'Logo Color',type:'logo'},
+  {id:'c_logoOutlineColor',label:'Logo Outline Color',type:'logo'},
+  {id:'c_fingerPadColor',label:'Finger Pad Color',type:'leather'},
+  {id:'c_lacesColor',label:'Laces Color',type:'lace'},
+  {id:'c_stitchingColor',label:'Stitching Color',type:'stitching'},
+  {id:'c_webColor',label:'Web Color',type:'leather'},
+  {id:'c_palmLeatherColor',label:'Palm Leather Color',type:'palm'},
+  {id:'c_backLeather1',label:'Back Leather 1 Color',type:'leather'},
+  {id:'c_bindingColor',label:'Binding Color',type:'binding'},
+  {id:'c_wristColor',label:'Wrist Color',type:'leather'},
+  {id:'c_crownColor',label:'Crown Color',type:'webcrown'},
+];
+const catcherDef={c_logoColor:'Pink',c_logoOutlineColor:'Pink',c_fingerPadColor:'Sky Blue',c_lacesColor:'Turquoise',c_stitchingColor:'Powder Blue',c_webColor:'Pink',c_palmLeatherColor:'Pink',c_backLeather1:'Pink',c_bindingColor:'Pink',c_wristColor:'Sky Blue',c_crownColor:'Sky Blue'};
+function isFirstbaseType(){const v=(typeof getComboVal==='function')?getComboVal('gloveType'):'';return v==='Firstbase Open'||v==='Firstbase Close';}
+function isCatcherType(){const v=(typeof getComboVal==='function')?getComboVal('gloveType'):'';return v==='Catcher';}
+function getGloveTypeDisplay(){const v=(typeof getComboVal==='function')?getComboVal('gloveType'):'';if(v==='Firstbase Open')return'First Baseman Open Back';if(v==='Firstbase Close')return'First Baseman Closed Back';return v;}
+const firstbaseWebStyles=['2-Piece Web','H-Web','Post Web'];
+let _allWebStyles=null;
+function rebuildWebStyleOptions(){
+  const sel=document.getElementById('webStyleSelect');
+  if(!sel)return;
+  if(_allWebStyles===null){_allWebStyles=Array.from(sel.options).filter(o=>o.value!=='__custom__').map(o=>o.value);}
+  const prev=sel.value;
+  const list=isFirstbaseType()?firstbaseWebStyles:_allWebStyles;
+  const customOpt='<option value="__custom__">기타 (직접 입력)</option>';
+  sel.innerHTML=list.map(v=>`<option value="${_escAttr(v)}">${_escText(v)}</option>`).join('')+customOpt;
+  const ci=document.getElementById('webStyleCustom');
+  if(prev==='__custom__'){sel.value='__custom__';}
+  else if(list.includes(prev)){sel.value=prev;}
+  else{sel.value=list[0];if(ci){ci.style.display='none';ci.value='';}}
+}
+function toggleCatcherOptions(){
+  const el=document.getElementById('catcherOnlyOptions');
+  if(el)el.style.display=isCatcherType()?'flex':'none';
+  const ws=document.getElementById('webStyleWrap');
+  if(ws)ws.style.display=isCatcherType()?'none':'block';
+}
+const firstbaseGloveSizes=['12.5"','12.75"','13"','13.25"','13.5"','14"'];
+const catcherGloveSizes=['32.5"','33"','33.5"','34"','35"'];
+let _allGloveSizes=null;
+function _escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function _escText(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rebuildGloveSizeOptions(){
+  const sel=document.getElementById('gloveSizeSelect');
+  if(!sel)return;
+  if(_allGloveSizes===null){_allGloveSizes=Array.from(sel.options).filter(o=>o.value!=='__custom__').map(o=>o.value);}
+  const prev=sel.value;
+  const fb=isFirstbaseType();
+  const ct=isCatcherType();
+  const list=fb?firstbaseGloveSizes:(ct?catcherGloveSizes:_allGloveSizes);
+  const customOpt='<option value="__custom__">기타 (직접 입력)</option>';
+  sel.innerHTML=list.map(v=>`<option value="${_escAttr(v)}">${_escText(v)}</option>`).join('')+customOpt;
+  const ci=document.getElementById('gloveSizeCustom');
+  if(fb){
+    // Force-select 12.5"
+    sel.selectedIndex=0;
+    if(ci){ci.style.display='none';ci.value='';}
+  } else if(ct){
+    // Force-select 33"
+    const idx=catcherGloveSizes.indexOf('33"');
+    sel.selectedIndex=idx>=0?idx:0;
+    if(ci){ci.style.display='none';ci.value='';}
+  } else if(prev==='__custom__'){
+    sel.value='__custom__';
+  } else if(list.includes(prev)){
+    sel.value=prev;
+  } else {
+    sel.selectedIndex=0;
+    if(ci){ci.style.display='none';ci.value='';}
+  }
+}
 const allColorHex={'Black':'#1a1a1a','Grey':'#9CA3AF','Silver':'#C0C0C0','White':'#FFFFFF','Blonde':'#F5E6C8','Lavender':'#C4B5FD','Kelly Green':'#4CAF50','Pastel Pink':'#FFB6C1','Mint':'#6EE7B7','Yellow':'#FDE047','Gold':'#F59E0B','Tan':'#D2B48C','Orange':'#F97316','Brown':'#92400E','Red':'#EF4444','Maroon':'#7F1D1D','Pink':'#F472B6','Purple':'#9333EA','Navy Blue':'#1E3A5F','Royal Blue':'#2563EB','Powder Blue':'#B0C4DE','Carolina Blue':'#7EB6D4','Forest Green':'#16A34A','Electric Green':'#39FF14','Turquoise':'#40E0D0','Seattle Green':'#005C5C','Rainbow':'__rainbow__','Orange Tan':'#E8955A','Oiled Chestnut':'#8B4513','Sky Blue':'#38BDF8','Blue Steel':'#4A7090','Red Steel':'#8B2020','Black Suede':'#2A2A2A','Red Suede':'#B22222','Blue Suede':'#3A5BA0','Denim':'#6B8CAE','White Snakeskin':'#F0EDE8','Black Snakeskin':'#2D2D2D','Blonde Snakeskin':'#EDD9A3','Tan Snakeskin':'#C8A882','Red Snakeskin':'#C0392B','Grey Snakeskin':'#7F8C8D','Royal Blue Snakeskin':'#1A4FA0','Tie Dye Snakeskin':'#E879A0','Camo Snakeskin':'#6B7C45','Cotton Candy Snakeskin':'#F9C6D0','Elephant Skin':'#A0A0A0','Black Paisley':'#1C1C1C','Tan Paisley':'#C9A87A','Black Perforated':'#222222','White Perforated':'#F5F5F5','Black Gator':'#1A1A1A','Black 44':'#111111','Blonde 44':'#F0D89C','White 44':'#FAFAFA','Black Mesh':'#333333','Grey Mesh':'#888888','White Mesh':'#F8F8F8','Blonde Mesh':'#EDD5A0','Brown Mesh':'#7B4F2E','Red Mesh':'#CC2222','Obsidian':'#2C2C35'};
 
 const kipPalmColorOptions=['Black','Grey','White','Blonde','Lavender','Yellow','Tan','Orange','Orange Tan','Oiled Chestnut','Brown','Red','Maroon','Pink','Purple','Navy Blue','Royal Blue','Sky Blue','Forest Green','Mint','Carolina Blue'];
-function getOpts(t){if(t==='logo')return logoColorOptions;if(t==='lace')return laceColorOptions;if(t==='stitching')return stitchingColorOptions;if(t==='welting')return weltingColorOptions;if(t==='binding')return bindingColorOptions;if(t==='palm')return palmColorOptions;if(t==='silver')return['Silver'];if(t==='kippalm')return kipPalmColorOptions;return leatherColorOptions;}
+const webCrownColorOptions=['Black','Grey','White','Blonde','Lavender','Yellow','Tan','Orange','Orange Tan','Oiled Chestnut','Brown','Red','Maroon','Pink','Purple','Navy Blue','Royal Blue','Sky Blue','Forest Green','Mint','Carolina Blue'];
+function getOpts(t){if(t==='logo')return logoColorOptions;if(t==='lace')return laceColorOptions;if(t==='stitching')return stitchingColorOptions;if(t==='welting')return weltingColorOptions;if(t==='binding')return bindingColorOptions;if(t==='palm')return palmColorOptions;if(t==='silver')return['Silver'];if(t==='kippalm')return kipPalmColorOptions;if(t==='webcrown')return webCrownColorOptions;return leatherColorOptions;}
 function getPrevStyle(c){if(c==='Rainbow')return'background:linear-gradient(90deg,#ff0000,#ff7700,#ffff00,#00cc00,#0000ff,#8b00ff);border-color:rgba(0,0,0,.1)';const h=allColorHex[c];if(!h||h==='__rainbow__')return'background:#ccc';const l=['White','White 44','White Perforated','White Snakeskin','White Mesh'].includes(c);return`background:${h};border-color:${l?'#ccc':'rgba(0,0,0,.15)'}`;}
 
 function buildColorGrid(){
+  const fb=isFirstbaseType();
+  const ct=isCatcherType();
   const dw=document.getElementById('dualWelting').checked;
   const tri=document.getElementById('tricolorLaces').checked;
   const inlay=document.getElementById('enableInlay').checked;
-  const fields=dw?dwFields:normalFields;
-  const defs=dw?dwDef:nDef;
-  const lacesId=dw?'dw_lacesColor':'n_lacesColor';
+  const fields=fb?firstbaseFields:(ct?catcherFields:(dw?dwFields:normalFields));
+  const defs=fb?fbDef:(ct?catcherDef:(dw?dwDef:nDef));
+  const lacesId=fb?'fb_lacesColor':(ct?'c_lacesColor':(dw?'dw_lacesColor':'n_lacesColor'));
   const grid=document.getElementById('colorGrid');
   grid.innerHTML='';
   const logoOutlineOn=document.getElementById('logoOutline').checked;
@@ -2128,36 +2236,51 @@ function buildColorGrid(){
   fields.forEach(f=>{
     if(f.id===lacesId&&tri)return;
     if(f.id==='n_logoOutlineColor'&&!logoOutlineOn)return;
+    if(f.id==='c_logoOutlineColor'&&!logoOutlineOn)return;
     if(f.id==='n_kipPalmLinerColor'&&!kipPalmOn)return;
     if(f.id==='n_hoodColor'&&fingerHoodVal!=='Hood')return;
     if(f.id==='n_padColor'&&fingerHoodVal!=='Pad')return;
+    if(f.id==='fb_fingerPadColor'&&fingerHoodVal==='None')return;
+    if(f.id==='c_fingerPadColor'&&fingerHoodVal==='None')return;
     const opts=getOpts(f.type);const def=defs[f.id]||opts[0];const sd=opts.includes(def)?def:opts[0];
     const w=document.createElement('div');w.className='color-field';
-    w.innerHTML=`<label>${f.label}</label><div class="color-row"><div class="color-preview" id="prev-${f.id}" style="${getPrevStyle(sd)}"></div><select id="${f.id}" onchange="updateColorPreview('${f.id}')">${opts.map(c=>`<option${c===sd?' selected':''}>${c}</option>`).join('')}</select></div>`;
+    w.innerHTML=`<label>${f.label}</label><div class="color-row"><div class="color-preview" id="prev-${f.id}" style="${getPrevStyle(sd)}"></div><select id="${f.id}" onchange="updateColorPreview('${f.id}')">${opts.map(c=>`<option${c===sd?' selected':''}>${c}</option>`).join('')}<option value="__custom__">기타 (직접 입력)</option></select></div><input class="custom-input" id="${f.id}_custom" placeholder="색상 직접 입력..." style="display:none">`;
     grid.appendChild(w);
   });
   document.getElementById('inlayBlock').style.display=inlay?'block':'none';
   document.getElementById('tricolorBlock').style.display=tri?'block':'none';
 }
-function buildInlaySelect(){const s=document.getElementById('inlayColor');if(!s)return;s.innerHTML=inlayColorOptions.map(c=>`<option${c==='Black'?' selected':''}>${c}</option>`).join('');const p=document.getElementById('prev-inlayColor');if(p)p.style.background=allColorHex['Black'];}
-function buildTricolorSelects(){['webFingerLaces','palmLaces','wristWingtipLaces'].forEach(id=>{const s=document.getElementById(id);if(!s)return;s.innerHTML=laceColorOptions.map(c=>`<option${c==='Pink'?' selected':''}>${c}</option>`).join('');const p=document.getElementById('prev-'+id);if(p)p.style.background=allColorHex['Pink'];});}
-function updateColorPreview(id){const s=document.getElementById(id);if(!s)return;const p=document.getElementById('prev-'+id);if(p)p.setAttribute('style',getPrevStyle(s.value));}
+function buildInlaySelect(){const s=document.getElementById('inlayColor');if(!s)return;s.innerHTML=inlayColorOptions.map(c=>`<option${c==='Black'?' selected':''}>${c}</option>`).join('')+'<option value="__custom__">기타 (직접 입력)</option>';const p=document.getElementById('prev-inlayColor');if(p)p.style.background=allColorHex['Black'];}
+function buildTricolorSelects(){['webFingerLaces','palmLaces','wristWingtipLaces'].forEach(id=>{const s=document.getElementById(id);if(!s)return;s.innerHTML=laceColorOptions.map(c=>`<option${c==='Pink'?' selected':''}>${c}</option>`).join('')+'<option value="__custom__">기타 (직접 입력)</option>';const p=document.getElementById('prev-'+id);if(p)p.style.background=allColorHex['Pink'];});}
+function updateColorPreview(id){
+  const s=document.getElementById(id);if(!s)return;
+  const p=document.getElementById('prev-'+id);
+  const ci=document.getElementById(id+'_custom');
+  if(s.value==='__custom__'){
+    if(p)p.setAttribute('style','background:#e5e7eb;border-color:rgba(0,0,0,.15)');
+    if(ci){ci.style.display='block';ci.focus();}
+  } else {
+    if(p)p.setAttribute('style',getPrevStyle(s.value));
+    if(ci){ci.style.display='none';ci.value='';}
+  }
+}
 function buildTextColorSelect(id,def){const s=document.getElementById(id);if(!s)return;s.innerHTML=textColorOptions.map(c=>`<option${c===def?' selected':''}>${c}</option>`).join('');}
 function selectFont(f){document.getElementById('textFont').value=f;document.getElementById('fontBtnScript').classList.toggle('active',f==='Script');document.getElementById('fontBtnBlock').classList.toggle('active',f==='Block');}
 function handleSelectCustom(si,ii){const s=document.getElementById(si);const i=document.getElementById(ii);if(s.value==='__custom__'){i.style.display='block';i.focus();}else{i.style.display='none';i.value='';}}
+function handleFingerHoodChange(){const v=document.getElementById('fingerHood').value;const wrap=document.getElementById('hoodPadPlacementWrap');if(wrap)wrap.style.display=(v==='None')?'none':'block';buildColorGrid();}
 function getSelectCustomVal(si,ii){const s=document.getElementById(si);if(s.value==='__custom__'){const v=document.getElementById(ii).value.trim();return v||'(미입력)';}return s.value;}
 function handleCombo(k){const s=document.getElementById(k+'Select');const i=document.getElementById(k+'Custom');if(s.value==='__custom__'){i.style.display='block';i.focus();}else{i.style.display='none';i.value='';}}
 function getComboVal(k){const s=document.getElementById(k+'Select');if(s.value==='__custom__'){const v=document.getElementById(k+'Custom').value.trim();return v||'(미입력)';}return s.value;}
-function handleLogoStyle(){const v=document.getElementById('logoStyle').value;const pw=document.getElementById('patchWrap');const sf=document.getElementById('patchSuffix');if(v==='Patch'||v==='Leather Patch'){pw.style.display='block';sf.textContent=v==='Leather Patch'?'Leather Patch':'Patch';}else{pw.style.display='none';document.getElementById('patchText').value='';}}
-function getLogoStyleVal(){const v=document.getElementById('logoStyle').value;if(v==='Patch'||v==='Leather Patch'){const t=document.getElementById('patchText').value.trim();return t?`${t} ${v}`:v;}return v;}
+function handleLogoStyle(){const v=document.getElementById('logoStyle').value;const pw=document.getElementById('patchWrap');const sf=document.getElementById('patchSuffix');const ci=document.getElementById('logoStyleCustom');if(v==='Patch'||v==='Leather Patch'){pw.style.display='block';sf.textContent=v==='Leather Patch'?'Leather Patch':'Patch';if(ci){ci.style.display='none';ci.value='';}}else if(v==='__custom__'){pw.style.display='none';document.getElementById('patchText').value='';if(ci){ci.style.display='block';ci.focus();}}else{pw.style.display='none';document.getElementById('patchText').value='';if(ci){ci.style.display='none';ci.value='';}}}
+function getLogoStyleVal(){const v=document.getElementById('logoStyle').value;if(v==='Patch'||v==='Leather Patch'){const t=document.getElementById('patchText').value.trim();return t?`${t} ${v}`:v;}if(v==='__custom__'){const t=document.getElementById('logoStyleCustom').value.trim();return t||'(미입력)';}return v;}
 function toggleField(id,show){document.getElementById(id).style.display=show?'block':'none';}
 function switchTab(name){const op=document.getElementById('order-page');op.querySelectorAll('.tab').forEach((t,i)=>{const n=['style','colors','personal','preview'];t.classList.toggle('active',n[i]===name)});op.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');if(name==='preview')generatePreview();}
 function getVal(id){const el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:el.value):'';}
-function getColorVal(id){const el=document.getElementById(id);return el?el.value:'';}
+function getColorVal(id){const el=document.getElementById(id);if(!el)return '';if(el.value==='__custom__'){const ci=document.getElementById(id+'_custom');return ci?(ci.value.trim()||'(미입력)'):'';}return el.value;}
 
 function generatePreview(){
   const orderType=getVal('orderNum')||'';
-  const gloveId=getVal('gloveId')||'4382812';
+  const gloveId=getVal('gloveId')||'';
   const dw=getVal('dualWelting');
   const tri=getVal('tricolorLaces');
   const inlay=getVal('enableInlay');
@@ -2166,20 +2289,49 @@ function generatePreview(){
   const wristOn=getVal('enableWristText');
   const palmOn=getVal('enablePalmText');
 
-  const styleData=[
-    ['Glove Model',getComboVal('gloveModel')],['Glove Type',getComboVal('gloveType')],
-    ['Glove Sport',getVal('gloveSport')],['Glove Size',getVal('gloveSize')],
-    ['Glove Stiffness',getVal('stiffness')],['Wrist Type',getVal('wristType')],
+  const fb=isFirstbaseType();
+  const ct=isCatcherType();
+  const gloveTypeDisplay=getGloveTypeDisplay();
+  const fingerHoodVal=getVal('fingerHood');
+  const hoodPadPlacementRow=(fingerHoodVal!=='None')?[['Finger Hood or Pad Placement',getSelectCustomVal('hoodPadPlacement','hoodPadPlacementCustom')]]:[];
+  const styleData = fb ? [
+    ['Glove Model',getComboVal('gloveModel')],['Glove Type',gloveTypeDisplay],
+    ['Glove Sport',getVal('gloveSport')],['Glove Size',getComboVal('gloveSize')],
+    ['Glove Stiffness',getVal('stiffness')],
+    ['Logo Style',getLogoStyleVal()],
+    ['Wrist Lining',getComboVal('wristLining')],['Throwing Hand',getVal('throwingHand')],
+    ['Finger Hood or Pad',fingerHoodVal],
+    ...hoodPadPlacementRow,
+    ['Lace Length',getVal('laceLength')],
+    ['Web Style',getComboVal('webStyle')],
+  ] : ct ? [
+    ['Glove Model',getComboVal('gloveModel')],['Glove Type',gloveTypeDisplay],
+    ['Glove Sport',getVal('gloveSport')],['Glove Size',getComboVal('gloveSize')],
+    ['Enable Logo Outline',getVal('logoOutline')?'Yes':'No'],
+    ['Velcro Wrist',getVal('velcroWrist')?'Yes':'No'],
+    ['Wrist Lining',getComboVal('wristLining')],
+    ['Wrist Guard',getVal('wristGuard')?'Yes':'No'],
+    ['Throwing Hand',getVal('throwingHand')],
+    ['Finger Hood or Pad',fingerHoodVal],
+    ...hoodPadPlacementRow,
+    ['Lace Length',getVal('laceLength')],
+    ['Enable Inlay',inlay?'Yes':'No'],
+  ] : [
+    ['Glove Model',getComboVal('gloveModel')],['Glove Type',gloveTypeDisplay],
+    ['Glove Sport',getVal('gloveSport')],['Glove Size',getComboVal('gloveSize')],
+    ['Glove Stiffness',getVal('stiffness')],['Wrist Type',getComboVal('wristType')],
     ['Logo Style',getLogoStyleVal()],['Enable Logo Outline',getVal('logoOutline')?'Yes':'No'],
-    ['Wrist Lining',getVal('wristLining')],['Throwing Hand',getVal('throwingHand')],
-    ['Finger Hood or Pad',getVal('fingerHood')],['Kip Palm Liner',getVal('kipPalm')?'Yes':'No'],
+    ['Wrist Lining',getComboVal('wristLining')],['Throwing Hand',getVal('throwingHand')],
+    ['Finger Hood or Pad',fingerHoodVal],
+    ...hoodPadPlacementRow,
+    ['Kip Palm Liner',getVal('kipPalm')?'Yes':'No'],
     ['Comfort Pro Thumb Sleeve',getVal('thumbSleeve')?'Yes':'No'],
     ['Lace Length',getVal('laceLength')],['Gill Lacing',getVal('gillLacing')?'Yes':'No'],
-    ['Dual Welting',dw?'Yes':'No'],['Web Style',getVal('webStyle')],
+    ['Dual Welting',dw?'Yes':'No'],['Web Style',getComboVal('webStyle')],
     ['Enable Inlay',inlay?'Yes':'No'],['Enable Tricolor Laces',tri?'Yes':'No'],
   ];
-  const activeFields=dw?dwFields:normalFields;
-  const lacesId=dw?'dw_lacesColor':'n_lacesColor';
+  const activeFields=fb?firstbaseFields:(ct?catcherFields:(dw?dwFields:normalFields));
+  const lacesId=fb?'fb_lacesColor':(ct?'c_lacesColor':(dw?'dw_lacesColor':'n_lacesColor'));
   const colorData=[];
   activeFields.forEach(f=>{
     if(f.id===lacesId&&tri){
@@ -2188,11 +2340,17 @@ function generatePreview(){
       colorData.push(['Wrist & Wingtip Laces Color',getColorVal('wristWingtipLaces')]);
     } else if(f.id==='n_logoOutlineColor'&&!getVal('logoOutline')){
       return;
+    } else if(f.id==='c_logoOutlineColor'&&!getVal('logoOutline')){
+      return;
     } else if(f.id==='n_kipPalmLinerColor'&&!getVal('kipPalm')){
       return;
     } else if(f.id==='n_hoodColor'&&getVal('fingerHood')!=='Hood'){
       return;
     } else if(f.id==='n_padColor'&&getVal('fingerHood')!=='Pad'){
+      return;
+    } else if(f.id==='fb_fingerPadColor'&&getVal('fingerHood')==='None'){
+      return;
+    } else if(f.id==='c_fingerPadColor'&&getVal('fingerHood')==='None'){
       return;
     } else {colorData.push([f.label,getColorVal(f.id)||'']);}
   });
