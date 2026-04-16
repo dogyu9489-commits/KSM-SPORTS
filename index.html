@@ -309,9 +309,11 @@
 #order-page .extra-block{margin-top:10px;padding:10px;border-radius:10px}
 #order-page .extra-block.inlay{background:#f0f9ff;border:1px solid #7dd3fc;display:none}
 #order-page .extra-block.tricolor{background:#fdf2f8;border:1px solid #f9a8d4;display:none}
+#order-page .extra-block.wristguard{background:#fef3c7;border:1px solid #fbbf24;display:none}
 #order-page .extra-header{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 #order-page .extra-block.inlay .extra-header{color:#0369a1}
 #order-page .extra-block.tricolor .extra-header{color:var(--oa)}
+#order-page .extra-block.wristguard .extra-header{color:#b45309}
 #order-page .tricolor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:end}
 #order-page .tricolor-grid .color-field label{min-height:30px;display:flex;align-items:flex-end}
 #order-page .btn-generate{width:100%;padding:14px;background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-top:1.5rem;transition:opacity .2s}
@@ -696,7 +698,7 @@
       <div class="toggle-row"><span class="toggle-label">Enable Tricolor Laces</span><label class="toggle"><input type="checkbox" id="tricolorLaces" onchange="buildColorGrid()"><span class="slider-sw"></span></label></div>
       <div id="catcherOnlyOptions" style="display:none;flex-direction:column;gap:6px">
         <div class="toggle-row"><span class="toggle-label">Velcro Wrist</span><label class="toggle"><input type="checkbox" id="velcroWrist"><span class="slider-sw"></span></label></div>
-        <div class="toggle-row"><span class="toggle-label">Wrist Guard</span><label class="toggle"><input type="checkbox" id="wristGuard"><span class="slider-sw"></span></label></div>
+        <div class="toggle-row"><span class="toggle-label">Wrist Guard</span><label class="toggle"><input type="checkbox" id="wristGuard" onchange="buildColorGrid();generatePreview()"><span class="slider-sw"></span></label></div>
       </div>
     </div>
     <button class="btn-generate" onclick="switchTab('colors')">다음: 색상 설정 →</button>
@@ -733,6 +735,16 @@
           <label>Wrist &amp; Wingtip Laces Color</label>
           <div class="color-row"><div class="color-preview" id="prev-wristWingtipLaces" style="background:#F472B6"></div><select id="wristWingtipLaces" onchange="updateColorPreview('wristWingtipLaces')"></select></div>
           <input class="custom-input" id="wristWingtipLaces_custom" placeholder="색상 직접 입력..." style="display:none">
+        </div>
+      </div>
+    </div>
+    <div class="extra-block wristguard" id="wristGuardBlock">
+      <div class="extra-header">Wrist Guard 색상</div>
+      <div class="color-grid">
+        <div class="color-field">
+          <label>Wrist Guard Color</label>
+          <div class="color-row"><div class="color-preview" id="prev-wristGuardColor" style="background:#1a1a1a"></div><select id="wristGuardColor" onchange="updateColorPreview('wristGuardColor');generatePreview()"></select></div>
+          <input class="custom-input" id="wristGuardColor_custom" placeholder="색상 직접 입력..." style="display:none" oninput="generatePreview()">
         </div>
       </div>
     </div>
@@ -2249,8 +2261,12 @@ function buildColorGrid(){
   });
   document.getElementById('inlayBlock').style.display=inlay?'block':'none';
   document.getElementById('tricolorBlock').style.display=tri?'block':'none';
+  const wgBlock=document.getElementById('wristGuardBlock');
+  if(wgBlock)wgBlock.style.display=(ct&&document.getElementById('wristGuard').checked)?'block':'none';
 }
 function buildInlaySelect(){const s=document.getElementById('inlayColor');if(!s)return;s.innerHTML=inlayColorOptions.map(c=>`<option${c==='Black'?' selected':''}>${c}</option>`).join('')+'<option value="__custom__">기타 (직접 입력)</option>';const p=document.getElementById('prev-inlayColor');if(p)p.style.background=allColorHex['Black'];}
+const wristGuardColorOptions=['Black','Grey','White','Blonde','Lavender','Yellow','Tan','Orange','Orange Tan','Oiled Chestnut','Brown','Red','Maroon','Pink','Purple','Navy Blue','Royal Blue'];
+function buildWristGuardSelect(){const s=document.getElementById('wristGuardColor');if(!s)return;s.innerHTML=wristGuardColorOptions.map(c=>`<option${c==='Black'?' selected':''}>${c}</option>`).join('')+'<option value="__custom__">기타 (직접 입력)</option>';const p=document.getElementById('prev-wristGuardColor');if(p)p.style.background=allColorHex['Black'];}
 function buildTricolorSelects(){['webFingerLaces','palmLaces','wristWingtipLaces'].forEach(id=>{const s=document.getElementById(id);if(!s)return;s.innerHTML=laceColorOptions.map(c=>`<option${c==='Pink'?' selected':''}>${c}</option>`).join('')+'<option value="__custom__">기타 (직접 입력)</option>';const p=document.getElementById('prev-'+id);if(p)p.style.background=allColorHex['Pink'];});}
 function updateColorPreview(id){
   const s=document.getElementById(id);if(!s)return;
@@ -2355,6 +2371,7 @@ function generatePreview(){
     } else {colorData.push([f.label,getColorVal(f.id)||'']);}
   });
   if(inlay)colorData.push(['Inlay Color',getColorVal('inlayColor')]);
+  if(ct&&getVal('wristGuard'))colorData.push(['Wrist Guard Color',getColorVal('wristGuardColor')]);
   const personalData=[
     ['Text Font',getVal('textFont')],
     ['Enable Thumb Text',thumbOn?'Yes':'No'],
@@ -2442,6 +2459,7 @@ buildTextColorSelect('thumbTextColor','Black');buildTextColorSelect('pinkyTextCo
 buildTextColorSelect('wristTextColor','Black');buildTextColorSelect('palmTextColor','Black');
 buildColorGrid();
 buildInlaySelect();
+buildWristGuardSelect();
 buildTricolorSelects();
 generatePreview();
 
