@@ -379,6 +379,9 @@
 #purchase-page .pr-btn-print:hover{border-color:#ec4899;color:#ec4899;opacity:1}
 #purchase-page .pr-btn-add{background:#fff;color:#ec4899;border:1px solid #f9a8d4;padding:7px 14px;font-size:12px;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s}
 #purchase-page .pr-btn-add:hover{background:#fdf2f8}
+#purchase-page .pr-discount-row{background:#fef2f2}
+#purchase-page .pr-discount-row td{color:#ef4444}
+#purchase-page .pr-discount-row input{color:#ef4444}
 #purchase-page .pr-btn-del{background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:4px}
 #purchase-page .pr-btn-del:hover{background:#fee2e2}
 #purchase-page .pr-hint{font-size:11px;color:#6b7280;margin-bottom:10px;padding:6px 10px;background:#f9fafb;border-radius:6px;border-left:3px solid #ec4899}
@@ -996,13 +999,26 @@
           <tbody id="prItemsBody"></tbody>
           <tfoot>
             <tr>
-              <td colspan="4" style="text-align:right;padding:10px 12px">합계 (Total)</td>
-              <td id="prGrandTotal" style="padding:10px 12px;text-align:right">₱ 0</td>
+              <td colspan="4" style="text-align:right;padding:8px 12px;color:#6b7280">소계 (Subtotal)</td>
+              <td id="prSubtotal" style="padding:8px 12px;text-align:right;color:#6b7280">₱ 0</td>
+              <td colspan="2"></td>
+            </tr>
+            <tr id="prDiscountRow" style="display:none">
+              <td colspan="4" style="text-align:right;padding:8px 12px;color:#ef4444;font-weight:600">할인 (Discount)</td>
+              <td id="prDiscountTotal" style="padding:8px 12px;text-align:right;color:#ef4444;font-weight:600">- ₱ 0</td>
+              <td colspan="2"></td>
+            </tr>
+            <tr style="border-top:2px solid #1a1a2e">
+              <td colspan="4" style="text-align:right;padding:10px 12px;font-weight:700">합계 (Total)</td>
+              <td id="prGrandTotal" style="padding:10px 12px;text-align:right;font-weight:700">₱ 0</td>
               <td colspan="2"></td>
             </tr>
           </tfoot>
         </table>
-        <button class="pr-btn-add" onclick="prAddRow()">+ 행 추가</button>
+        <div style="display:flex;gap:8px">
+          <button class="pr-btn-add" onclick="prAddRow()">+ 행 추가</button>
+          <button class="pr-btn-add" onclick="prAddDiscountRow()" style="color:#ef4444;border-color:#fca5a5">− 할인 행 추가</button>
+        </div>
       </div>
 
       <!-- 3. 사진 첨부 -->
@@ -2706,6 +2722,25 @@ function prAddRow(){
   tbody.appendChild(tr);
   prRecalc();
 }
+function prAddDiscountRow(){
+  const tbody=document.getElementById('prItemsBody');if(!tbody)return;
+  const idx=tbody.children.length+1;
+  const c=prGetCurrency();
+  const tr=document.createElement('tr');
+  tr.className='pr-discount-row';
+  tr.dataset.discount='1';
+  tr.innerHTML=`
+    <td style="text-align:center;font-weight:600">${idx}</td>
+    <td><input type="text" class="pr-name" placeholder="할인 사유" value="할인 (Discount)" style="color:#ef4444"></td>
+    <td style="text-align:center;color:#9ca3af;font-size:11px">—</td>
+    <td><input type="number" class="pr-disc-amt" min="0" step="0.01" oninput="prRecalc()" style="text-align:right;color:#ef4444" placeholder="할인 금액"></td>
+    <td class="pr-row-total" style="text-align:right;padding:8px 10px;font-size:12px;font-weight:600">- ${c.symbol} 0</td>
+    <td><input type="text" class="pr-rem" placeholder="비고" style="color:#ef4444"></td>
+    <td style="text-align:center"><button type="button" class="pr-btn-del" onclick="prRemoveRow(this)" title="행 삭제">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  prRecalc();
+}
 function prRemoveRow(btn){
   const tr=btn.closest('tr');if(!tr)return;
   tr.remove();
@@ -2714,22 +2749,38 @@ function prRemoveRow(btn){
 }
 function prRecalc(){
   const c=prGetCurrency();
-  // 컬럼 헤더 업데이트
   const uh=document.getElementById('prUnitHdr');
   const th=document.getElementById('prTotalHdr');
   if(uh)uh.textContent=`예상 단가 (${c.symbol})`;
   if(th)th.textContent=`예상 총액 (${c.symbol})`;
-  let grand=0;
+  let subtotal=0;
+  let discountTotal=0;
   document.querySelectorAll('#prItemsBody tr').forEach(tr=>{
-    const qtyEl=tr.querySelector('.pr-qty');
-    const unitEl=tr.querySelector('.pr-unit');
-    const qty=parseFloat(qtyEl?qtyEl.value:0)||0;
-    const unit=parseFloat(unitEl?unitEl.value:0)||0;
-    const total=qty*unit;
-    const cell=tr.querySelector('.pr-row-total');
-    if(cell)cell.textContent=prFormatMoney(total,c);
-    grand+=total;
+    const isDisc=tr.dataset.discount==='1';
+    if(isDisc){
+      const amtEl=tr.querySelector('.pr-disc-amt');
+      const amt=parseFloat(amtEl?amtEl.value:0)||0;
+      discountTotal+=amt;
+      const cell=tr.querySelector('.pr-row-total');
+      if(cell)cell.textContent='- '+prFormatMoney(amt,c);
+    } else {
+      const qtyEl=tr.querySelector('.pr-qty');
+      const unitEl=tr.querySelector('.pr-unit');
+      const qty=parseFloat(qtyEl?qtyEl.value:0)||0;
+      const unit=parseFloat(unitEl?unitEl.value:0)||0;
+      const total=qty*unit;
+      const cell=tr.querySelector('.pr-row-total');
+      if(cell)cell.textContent=prFormatMoney(total,c);
+      subtotal+=total;
+    }
   });
+  const grand=subtotal-discountTotal;
+  const stEl=document.getElementById('prSubtotal');
+  if(stEl)stEl.textContent=prFormatMoney(subtotal,c);
+  const drEl=document.getElementById('prDiscountRow');
+  if(drEl)drEl.style.display=discountTotal>0?'':'none';
+  const dtEl=document.getElementById('prDiscountTotal');
+  if(dtEl)dtEl.textContent='- '+prFormatMoney(discountTotal,c);
   const gtEl=document.getElementById('prGrandTotal');
   if(gtEl)gtEl.textContent=prFormatMoney(grand,c);
 }
@@ -2773,14 +2824,21 @@ function prFastPrint(){
   const notes=document.getElementById('prNotes').value||'';
   const rows=[];
   document.querySelectorAll('#prItemsBody tr').forEach((tr,i)=>{
+    const isDisc=tr.dataset.discount==='1';
     const name=tr.querySelector('.pr-name')?.value||'';
-    const qty=tr.querySelector('.pr-qty')?.value||'';
-    const unit=tr.querySelector('.pr-unit')?.value||'';
-    const total=tr.querySelector('.pr-row-total')?.textContent||'';
     const rem=tr.querySelector('.pr-rem')?.value||'';
-    // 비어있는 행은 제외 (품명/수량/단가/비고 모두 공란인 경우)
-    if(!name&&!qty&&!unit&&!rem)return;
-    rows.push({idx:rows.length+1,name,qty,unit,total,rem});
+    if(isDisc){
+      const amt=tr.querySelector('.pr-disc-amt')?.value||'';
+      const total=tr.querySelector('.pr-row-total')?.textContent||'';
+      if(!name&&!amt&&!rem)return;
+      rows.push({idx:rows.length+1,name,qty:'—',unit:'',total,rem,isDisc:true,amt});
+    } else {
+      const qty=tr.querySelector('.pr-qty')?.value||'';
+      const unit=tr.querySelector('.pr-unit')?.value||'';
+      const total=tr.querySelector('.pr-row-total')?.textContent||'';
+      if(!name&&!qty&&!unit&&!rem)return;
+      rows.push({idx:rows.length+1,name,qty,unit,total,rem,isDisc:false});
+    }
   });
   const img1El=document.getElementById('prPhotoImg1');
   const img2El=document.getElementById('prPhotoImg2');
@@ -2790,17 +2848,31 @@ function prFastPrint(){
   const photoImg2=img2El.src||'';
   const photoDesc1=document.getElementById('prPhotoDesc1').value||'';
   const photoDesc2=document.getElementById('prPhotoDesc2').value||'';
+  const subtotal=document.getElementById('prSubtotal').textContent;
+  const discountTotal=document.getElementById('prDiscountTotal').textContent;
   const grandTotal=document.getElementById('prGrandTotal').textContent;
+  const hasDiscount=document.getElementById('prDiscountRow').style.display!=='none';
 
-  const rowsHtml=rows.length>0?rows.map(r=>`
-    <tr>
+  const rowsHtml=rows.length>0?rows.map(r=>{
+    if(r.isDisc){
+      return`<tr style="background:#fef2f2;color:#ef4444">
+        <td style="text-align:center">${r.idx}</td>
+        <td style="color:#ef4444">${prEscape(r.name)}</td>
+        <td style="text-align:center;color:#9ca3af">—</td>
+        <td style="text-align:right;color:#ef4444">${r.amt?'- '+prFormatMoney(parseFloat(r.amt),cur):''}</td>
+        <td style="text-align:right;color:#ef4444;font-weight:600">${prEscape(r.total)}</td>
+        <td style="color:#ef4444">${prEscape(r.rem)}</td>
+      </tr>`;
+    }
+    return`<tr>
       <td style="text-align:center">${r.idx}</td>
       <td>${prEscape(r.name)}</td>
       <td style="text-align:center">${prEscape(r.qty)}</td>
       <td style="text-align:right">${r.unit?prFormatMoney(parseFloat(r.unit),cur):''}</td>
       <td style="text-align:right">${prEscape(r.total)}</td>
       <td>${prEscape(r.rem)}</td>
-    </tr>`).join(''):`<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:12px">(요청 항목 없음)</td></tr>`;
+    </tr>`;
+  }).join(''):`<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:12px">(요청 항목 없음)</td></tr>`;
 
   const content=`
     <div class="pr-doc">
@@ -2842,6 +2914,16 @@ function prFastPrint(){
         </thead>
         <tbody>
           ${rowsHtml}
+          <tr style="background:#f9fafb">
+            <td colspan="4" style="text-align:right;color:#6b7280">소계 (Subtotal)</td>
+            <td style="text-align:right;color:#6b7280">${prEscape(subtotal)}</td>
+            <td></td>
+          </tr>
+          ${hasDiscount?`<tr style="background:#fef2f2">
+            <td colspan="4" style="text-align:right;color:#ef4444;font-weight:600">할인 (Discount)</td>
+            <td style="text-align:right;color:#ef4444;font-weight:600">${prEscape(discountTotal)}</td>
+            <td></td>
+          </tr>`:''}
           <tr class="total-row">
             <td colspan="4" style="text-align:right;font-weight:700">합계 (Total)</td>
             <td style="text-align:right;font-weight:700">${prEscape(grandTotal)}</td>
@@ -2938,6 +3020,7 @@ function prFastPrint(){
   }
 })();
 window.prAddRow=prAddRow;
+window.prAddDiscountRow=prAddDiscountRow;
 window.prRemoveRow=prRemoveRow;
 window.prRecalc=prRecalc;
 window.prHandlePhoto=prHandlePhoto;
