@@ -391,6 +391,70 @@
   #purchase-page .pr-items{font-size:11px}
 }
 
+/* ── Leather Change Report ── */
+#leather-report-page{font-family:'Barlow',sans-serif;color:#1a1a2e;--lr:#ec4899;--lr-light:#fdf2f8;--lr-border:#f9a8d4}
+#leather-report-page .app{padding:1.5rem;max-width:900px;margin:0 auto}
+#leather-report-page h1{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;color:#1a1a2e}
+#leather-report-page .lr-subtitle{font-size:13px;color:#6b7280;margin-bottom:1.25rem}
+#leather-report-page .lr-section{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:14px}
+#leather-report-page .lr-section-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--lr);letter-spacing:.5px}
+#leather-report-page .lr-grid{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center}
+#leather-report-page .lr-grid label{font-size:12px;color:#6b7280;font-weight:500;padding:0 4px}
+#leather-report-page .lr-grid input[type=text],#leather-report-page .lr-grid input[type=date]{background:#fff;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:13px;font-family:inherit;color:#1a1a2e;width:100%;outline:none;transition:border .15s}
+#leather-report-page .lr-grid input:focus{border-color:var(--lr)}
+#leather-report-page .lr-item{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:14px}
+#leather-report-page .lr-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+#leather-report-page .lr-item-num{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--lr)}
+#leather-report-page .lr-item-del{background:none;border:1px solid #fca5a5;color:#ef4444;cursor:pointer;font-size:12px;padding:4px 10px;border-radius:6px;font-family:inherit}
+#leather-report-page .lr-item-del:hover{background:#fee2e2}
+#leather-report-page .lr-photo-row{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;align-items:center;margin-bottom:12px}
+#leather-report-page .lr-photo{border:1px solid #e5e7eb;border-radius:8px;padding:10px;background:#fafafa;text-align:center}
+#leather-report-page .lr-photo-title{font-size:11px;font-weight:600;color:#6b7280;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+#leather-report-page .lr-photo-area{min-height:140px;border:2px dashed #d1d5db;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;overflow:hidden;position:relative;transition:border-color .15s}
+#leather-report-page .lr-photo-area:hover{border-color:var(--lr)}
+#leather-report-page .lr-photo-area img{max-width:100%;max-height:180px;object-fit:contain}
+#leather-report-page .lr-photo-plus{color:#9ca3af;font-size:36px;font-weight:300;line-height:1}
+#leather-report-page .lr-photo-clear{position:absolute;top:4px;right:4px;background:rgba(255,255,255,.9);border:1px solid #e5e7eb;color:#ef4444;border-radius:50%;width:22px;height:22px;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:12px;padding:0}
+#leather-report-page .lr-photo-clear:hover{background:#fee2e2}
+#leather-report-page .lr-arrow{font-size:28px;color:var(--lr);font-weight:700;text-align:center}
+#leather-report-page .lr-desc{margin-bottom:10px}
+#leather-report-page .lr-desc textarea{width:100%;border:1px solid #e5e7eb;border-radius:7px;padding:8px 10px;font-size:13px;font-family:inherit;color:#1a1a2e;outline:none;resize:vertical;min-height:50px}
+#leather-report-page .lr-desc textarea:focus{border-color:var(--lr)}
+#leather-report-page .lr-ref{border:1px solid var(--lr-border);border-radius:7px;overflow:hidden;margin-top:10px;background:var(--lr-light)}
+#leather-report-page .lr-ref-title{font-size:12px;font-weight:600;color:var(--lr);padding:8px 12px;background:var(--lr-light);border-bottom:1px solid var(--lr-border);display:flex;align-items:center;justify-content:space-between}
+#leather-report-page .lr-ref table{width:100%;border-collapse:collapse;font-size:11px;background:#fff}
+#leather-report-page .lr-ref th{background:#fdf2f8;border:1px solid #f3e8f0;padding:5px 6px;font-weight:600;color:#9d174d;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+#leather-report-page .lr-ref td{border:1px solid #f3e8f0;padding:1px;vertical-align:middle}
+#leather-report-page .lr-ref td input[type=text]{width:100%;border:none;background:transparent;padding:5px 6px;font-size:11px;font-family:inherit;color:#1a1a2e;outline:none}
+#leather-report-page .lr-ref td input[type=text]:focus{background:#fdf2f8}
+#leather-report-page .lr-ref td select{border:none;background:transparent;padding:5px 4px;font-size:11px;font-family:inherit;color:#1a1a2e;outline:none;cursor:pointer;width:100%}
+#leather-report-page .lr-ref td select:focus{background:#fdf2f8}
+#leather-report-page .lr-ref-add{background:none;border:none;color:var(--lr);font-size:11px;font-weight:600;cursor:pointer;padding:2px 6px}
+#leather-report-page .lr-ref-add:hover{text-decoration:underline}
+#leather-report-page .lr-ref-del{background:none;border:none;color:#ef4444;cursor:pointer;font-size:12px;padding:2px 4px}
+#leather-report-page .lr-ref-del:hover{color:#b91c1c}
+#leather-report-page .lr-grades{display:flex;flex-wrap:wrap;gap:4px;padding:4px 5px;align-items:center}
+#leather-report-page .lr-grade-chip{display:inline-flex;align-items:center;gap:3px;background:var(--lr-light);border:1px solid var(--lr-border);border-radius:6px;padding:3px 5px;font-size:11px}
+#leather-report-page .lr-grade-chip select{border:none;background:transparent;font-size:11px;font-weight:700;color:#9d174d;outline:none;cursor:pointer;padding:0;width:28px;-webkit-appearance:none;appearance:none;text-align:center}
+#leather-report-page .lr-grade-chip span{font-size:10px;color:#6b7280}
+#leather-report-page .lr-grade-chip input{border:none;background:#fff;font-size:11px;color:#1a1a2e;outline:none;width:40px;text-align:center;padding:2px 3px;border-radius:4px;border:1px solid #e5e7eb}
+#leather-report-page .lr-grade-chip input:focus{border-color:var(--lr)}
+#leather-report-page .lr-grade-chip-del{background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:0 2px;line-height:1}
+#leather-report-page .lr-grade-chip-del:hover{color:#ef4444}
+#leather-report-page .lr-grade-add{background:none;border:1px dashed var(--lr-border);color:var(--lr);cursor:pointer;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;white-space:nowrap}
+#leather-report-page .lr-grade-add:hover{background:var(--lr-light);border-style:solid}
+#leather-report-page .lr-btn{width:100%;padding:14px;background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:opacity .2s}
+#leather-report-page .lr-btn:hover{opacity:.9}
+#leather-report-page .lr-btn-print{background:#fff;color:#1a1a2e;border:2px solid #e5e7eb;padding:12px}
+#leather-report-page .lr-btn-print:hover{border-color:var(--lr);color:var(--lr);opacity:1}
+#leather-report-page .lr-btn-add{background:#fff;color:var(--lr);border:1px solid var(--lr-border);padding:10px 18px;font-size:13px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s}
+#leather-report-page .lr-btn-add:hover{background:var(--lr-light)}
+@media (max-width:640px){
+  #leather-report-page .lr-grid{grid-template-columns:1fr;gap:6px}
+  #leather-report-page .lr-photo-row{grid-template-columns:1fr;gap:6px}
+  #leather-report-page .lr-arrow{transform:rotate(90deg)}
+}
+
 </style>
 
 </head>
@@ -429,6 +493,7 @@
   <button class="page-tab active" data-page="notice">공지사항</button>
   <button class="page-tab" data-page="schedule">매니저 일정</button>
   <button class="page-tab" data-page="tracker">가죽 컬러 트래커</button>
+  <button class="page-tab" data-page="leather-report">가죽변경 보고</button>
   <button class="page-tab" data-page="order">오더 시트</button>
   <button class="page-tab" data-page="purchase">구매 요청서</button>
 </nav>
@@ -666,6 +731,39 @@
 
 </div>
 </div><!-- /page-tracker -->
+
+<!-- PAGE: 가죽변경 보고 -->
+<div id="page-leather-report" class="page-content">
+  <div id="leather-report-page">
+    <div class="app">
+      <h1>가죽변경 보고</h1>
+      <p class="lr-subtitle">Leather Change Report · 44 보고</p>
+
+      <!-- 기본 정보 -->
+      <div class="lr-section">
+        <div class="lr-section-title">보고 정보</div>
+        <div class="lr-grid">
+          <label>보고일자</label>
+          <input type="date" id="lrDate">
+          <label>보고자</label>
+          <input type="text" id="lrReporter" placeholder="이름 입력">
+          <label>보고 제목</label>
+          <input type="text" id="lrTitle" placeholder="예: 회색 가죽 변경 보고">
+        </div>
+      </div>
+
+      <!-- 변경 항목들 -->
+      <div id="lrItemsWrap"></div>
+
+      <button class="lr-btn-add" onclick="lrAddItem()">+ 변경 항목 추가</button>
+
+      <button class="lr-btn lr-btn-print" onclick="lrFastPrint()" style="margin-top:16px">🖨️ 인쇄 / PDF 저장</button>
+    </div>
+    <div style="text-align:center;padding:1.2rem;font-size:12px;color:var(--text2);letter-spacing:.5px;font-family:'Barlow',sans-serif;border-top:1px solid var(--border);margin-top:1rem;background:#fff;">
+      © Copyright Dogyu Jang (KSM SPORTS). All rights reserved.
+    </div>
+  </div>
+</div><!-- /page-leather-report -->
 
 <!-- PAGE: ORDER SHEET -->
 <div id="page-order" class="page-content">
@@ -3026,6 +3124,301 @@ window.prRecalc=prRecalc;
 window.prHandlePhoto=prHandlePhoto;
 window.prClearPhoto=prClearPhoto;
 window.prFastPrint=prFastPrint;
+
+/* ── Leather Change Report ── */
+let lrUid=0;
+function lrRenumber(){
+  document.querySelectorAll('#lrItemsWrap .lr-item').forEach((item,i)=>{
+    const numEl=item.querySelector('.lr-item-num');
+    if(numEl)numEl.textContent=(i+1)+'. 변경 내역';
+  });
+}
+function lrAddItem(){
+  lrUid++;
+  const n=lrUid;
+  const wrap=document.getElementById('lrItemsWrap');
+  const div=document.createElement('div');
+  div.className='lr-item';
+  div.id='lrItem'+n;
+  div.innerHTML=`
+    <div class="lr-item-header">
+      <span class="lr-item-num">1. 변경 내역</span>
+      <button type="button" class="lr-item-del" onclick="lrRemoveItem(${n})">✕ 삭제</button>
+    </div>
+    <div class="lr-photo-row">
+      <div class="lr-photo">
+        <div class="lr-photo-title">📷 변경 전 (Before)</div>
+        <div class="lr-photo-area" id="lrPhotoArea${n}a" onclick="if(event.target.id!=='lrPhotoClear${n}a')document.getElementById('lrPhotoInput${n}a').click()">
+          <span class="lr-photo-plus" id="lrPhotoPlus${n}a">＋</span>
+          <img id="lrPhotoImg${n}a" src="" style="display:none" alt="">
+          <button type="button" class="lr-photo-clear" id="lrPhotoClear${n}a" onclick="lrClearPhoto(${n},'a');event.stopPropagation()">✕</button>
+        </div>
+        <input type="file" accept="image/*" id="lrPhotoInput${n}a" style="display:none" onchange="lrHandlePhoto(${n},'a')">
+      </div>
+      <div class="lr-arrow">→</div>
+      <div class="lr-photo">
+        <div class="lr-photo-title">📷 변경 후 (After)</div>
+        <div class="lr-photo-area" id="lrPhotoArea${n}b" onclick="if(event.target.id!=='lrPhotoClear${n}b')document.getElementById('lrPhotoInput${n}b').click()">
+          <span class="lr-photo-plus" id="lrPhotoPlus${n}b">＋</span>
+          <img id="lrPhotoImg${n}b" src="" style="display:none" alt="">
+          <button type="button" class="lr-photo-clear" id="lrPhotoClear${n}b" onclick="lrClearPhoto(${n},'b');event.stopPropagation()">✕</button>
+        </div>
+        <input type="file" accept="image/*" id="lrPhotoInput${n}b" style="display:none" onchange="lrHandlePhoto(${n},'b')">
+      </div>
+    </div>
+    <div class="lr-desc">
+      <textarea id="lrDesc${n}" placeholder="변경 사유 및 상세 내용을 입력하세요." rows="3"></textarea>
+    </div>
+    <div class="lr-ref">
+      <div class="lr-ref-title">
+        <span>참고자료</span>
+        <button type="button" class="lr-ref-add" onclick="lrAddRefRow(${n})">+ 행 추가</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:70px">구분</th>
+            <th style="width:13%">색상</th>
+            <th style="width:13%">원산지</th>
+            <th style="width:13%">회사</th>
+            <th style="width:15%">가죽 종류</th>
+            <th>등급 / 수량</th>
+            <th style="width:24px"></th>
+          </tr>
+        </thead>
+        <tbody id="lrRefBody${n}"></tbody>
+      </table>
+    </div>
+  `;
+  wrap.appendChild(div);
+  lrAddRefRow(n,'before');
+  lrAddRefRow(n,'after');
+  lrRenumber();
+}
+function lrRemoveItem(n){
+  const el=document.getElementById('lrItem'+n);
+  if(el)el.remove();
+  lrRenumber();
+}
+function lrAddRefRow(itemN,type){
+  const tbody=document.getElementById('lrRefBody'+itemN);
+  if(!tbody)return;
+  const tr=document.createElement('tr');
+  const selType=type||'before';
+  const rid='lr_r_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+  tr.innerHTML=`
+    <td><select class="lr-r-type">
+      <option value="before"${selType==='before'?' selected':''}>변경 전</option>
+      <option value="after"${selType==='after'?' selected':''}>변경 후</option>
+    </select></td>
+    <td><input type="text" class="lr-r-color" placeholder="Grey"></td>
+    <td><input type="text" class="lr-r-origin" placeholder="일본"></td>
+    <td><input type="text" class="lr-r-company" placeholder="KODERA"></td>
+    <td><input type="text" class="lr-r-ltype" placeholder="스티어"></td>
+    <td><div class="lr-grades" id="${rid}">
+      <button type="button" class="lr-grade-add" onclick="lrAddGrade(this.parentNode)">+ 등급</button>
+    </div></td>
+    <td style="text-align:center"><button type="button" class="lr-ref-del" onclick="this.closest('tr').remove()" title="삭제">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  // 기본 등급 1개 추가
+  lrAddGrade(tr.querySelector('.lr-grades'));
+}
+function lrAddGrade(container){
+  const chip=document.createElement('span');
+  chip.className='lr-grade-chip';
+  chip.innerHTML=`
+    <select><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="X">X</option></select>
+    <span>:</span>
+    <input type="number" min="0" step="1" placeholder="0" value="">
+    <button type="button" class="lr-grade-chip-del" onclick="this.parentNode.remove()" title="삭제">✕</button>
+  `;
+  const addBtn=container.querySelector('.lr-grade-add');
+  container.insertBefore(chip,addBtn);
+}
+function lrRemoveRefRow(btn){
+  const tr=btn.closest('tr');if(tr)tr.remove();
+}
+function lrHandlePhoto(n,ab){
+  const input=document.getElementById('lrPhotoInput'+n+ab);
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=document.getElementById('lrPhotoImg'+n+ab);
+    img.src=e.target.result;img.style.display='block';
+    document.getElementById('lrPhotoPlus'+n+ab).style.display='none';
+    document.getElementById('lrPhotoClear'+n+ab).style.display='flex';
+  };
+  reader.readAsDataURL(file);
+}
+function lrClearPhoto(n,ab){
+  const img=document.getElementById('lrPhotoImg'+n+ab);
+  img.src='';img.style.display='none';
+  document.getElementById('lrPhotoPlus'+n+ab).style.display='inline';
+  document.getElementById('lrPhotoClear'+n+ab).style.display='none';
+  document.getElementById('lrPhotoInput'+n+ab).value='';
+}
+function lrFmtDate(d){
+  if(!d)return'____.__.__';
+  const dt=new Date(d);
+  if(isNaN(dt.getTime()))return d;
+  return dt.getFullYear()+'.'+(dt.getMonth()+1)+'.'+dt.getDate();
+}
+function lrEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br>');}
+function lrFastPrint(){
+  const date=document.getElementById('lrDate').value||'';
+  const reporter=document.getElementById('lrReporter').value||'';
+  const title=document.getElementById('lrTitle').value||'가죽 변경 보고';
+  const items=document.querySelectorAll('#lrItemsWrap .lr-item');
+  let itemsHtml='';
+  let idx=0;
+  items.forEach(item=>{
+    idx++;
+    const id=item.id.replace('lrItem','');
+    const imgA=document.getElementById('lrPhotoImg'+id+'a');
+    const imgB=document.getElementById('lrPhotoImg'+id+'b');
+    const showA=imgA&&imgA.src&&imgA.style.display!=='none';
+    const showB=imgB&&imgB.src&&imgB.style.display!=='none';
+    const desc=document.getElementById('lrDesc'+id)?.value||'';
+    // 참고자료 행 수집
+    const refRows=[];
+    const refBody=document.getElementById('lrRefBody'+id);
+    if(refBody){
+      refBody.querySelectorAll('tr').forEach(tr=>{
+        const rtype=tr.querySelector('.lr-r-type')?.value||'';
+        const color=tr.querySelector('.lr-r-color')?.value||'';
+        const origin=tr.querySelector('.lr-r-origin')?.value||'';
+        const company=tr.querySelector('.lr-r-company')?.value||'';
+        const ltype=tr.querySelector('.lr-r-ltype')?.value||'';
+        const grades=[];
+        tr.querySelectorAll('.lr-grade-chip').forEach(chip=>{
+          const g=chip.querySelector('select')?.value||'';
+          const q=chip.querySelector('input')?.value||'';
+          if(g)grades.push({g,q});
+        });
+        if(color||origin||company||ltype||grades.length>0){
+          refRows.push({rtype,color,origin,company,ltype,grades});
+        }
+      });
+    }
+    const refHtml=refRows.length>0?`
+          <div class="ref-box">
+            <div class="ref-box-title">참고자료</div>
+            <table class="ref-table">
+              <thead><tr>
+                <th style="width:65px">구분</th><th>색상</th><th>원산지</th><th>회사</th><th>가죽 종류</th><th>등급 / 수량</th>
+              </tr></thead>
+              <tbody>${refRows.map(r=>{
+                const isAfter=r.rtype==='after';
+                const typeLabel=isAfter?'변경 후':'변경 전';
+                const rowClass=isAfter?' class="ref-after"':'';
+                const gradeStr=r.grades.length>0?r.grades.map(gq=>'<span class="grade-tag"><b>'+lrEsc(gq.g)+'</b> : '+lrEsc(gq.q||'0')+'</span>').join(''):'—';
+                return`<tr${rowClass}>
+                <td class="td-type">${typeLabel}</td>
+                <td>${lrEsc(r.color)||'-'}</td>
+                <td>${lrEsc(r.origin)||'-'}</td>
+                <td>${lrEsc(r.company)||'-'}</td>
+                <td>${lrEsc(r.ltype)||'-'}</td>
+                <td class="td-grades">${gradeStr}</td>
+              </tr>`;}).join('')}</tbody>
+            </table>
+          </div>`:'';
+    itemsHtml+=`
+      <div class="card">
+        <div class="item-header">${idx}. 변경 내역</div>
+        <div class="photo-row">
+          <div class="photo-box">
+            <div class="photo-label">📷 변경 전 (Before)</div>
+            <div class="photo-inner">${showA?'<img src="'+imgA.src+'">':'<div class="no-photo">사진 없음</div>'}</div>
+          </div>
+          <div class="photo-arrow">→</div>
+          <div class="photo-box">
+            <div class="photo-label">📷 변경 후 (After)</div>
+            <div class="photo-inner">${showB?'<img src="'+imgB.src+'">':'<div class="no-photo">사진 없음</div>'}</div>
+          </div>
+        </div>
+        ${desc?'<div class="desc-box">'+lrEsc(desc).replace(/<br>/g,'\n')+'</div>':''}
+        ${refHtml}
+      </div>
+    `;
+  });
+  const content=`
+    <div class="lr-doc">
+      <h1>가죽변경 보고</h1>
+      <p class="lr-sub">Leather Change Report · 44 보고</p>
+      <div class="card">
+        <div class="card-title">보고 정보</div>
+        <table class="info-tbl">
+          <tr><th>보고일자</th><td>${lrFmtDate(date)}</td></tr>
+          <tr><th>보고자</th><td>${lrEsc(reporter)||'-'}</td></tr>
+          <tr><th>보고 제목</th><td>${lrEsc(title)}</td></tr>
+        </table>
+      </div>
+      ${itemsHtml||'<div class="card" style="text-align:center;color:#9ca3af;padding:30px">변경 항목이 없습니다.</div>'}
+    </div>
+  `;
+  const printStyles=`
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+      body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;background:#f7f7f5;padding:10px;color:#1a1a2e;font-size:12px;line-height:1.4}
+      .lr-doc{max-width:99%;margin:0 auto}
+      .lr-doc h1{font-size:22px;font-weight:800;letter-spacing:1px;margin-bottom:2px;color:#1a1a2e}
+      .lr-sub{font-size:11px;color:#6b7280;margin-bottom:12px}
+      .card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+      .card-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid #ec4899}
+      .info-tbl{width:100%;border-collapse:collapse;font-size:12px}
+      .info-tbl th{width:90px;text-align:left;padding:6px 8px;color:#6b7280;font-weight:500;font-size:11px;vertical-align:middle}
+      .info-tbl td{padding:6px 8px;color:#1a1a2e}
+      .item-header{font-size:14px;font-weight:700;color:#ec4899;margin-bottom:10px}
+      .photo-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+      .photo-box{flex:1;border:1px solid #e5e7eb;border-radius:8px;padding:8px;background:#fafafa;text-align:center}
+      .photo-label{font-size:9px;font-weight:600;color:#6b7280;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+      .photo-inner{min-height:140px;display:flex;align-items:center;justify-content:center}
+      .photo-inner img{max-width:100%;max-height:180px;object-fit:contain}
+      .photo-arrow{font-size:24px;font-weight:700;color:#ec4899;flex-shrink:0;padding:0 4px}
+      .no-photo{color:#d1d5db;font-size:10px;font-style:italic}
+      .desc-box{background:#fff;border:1px solid #e5e7eb;border-radius:7px;padding:10px 12px;margin-bottom:10px;font-size:12px;line-height:1.6;color:#333;white-space:pre-line;min-height:30px}
+      .ref-box{border:1px solid #f9a8d4;border-radius:7px;overflow:hidden;background:#fdf2f8}
+      .ref-box-title{font-size:11px;font-weight:600;color:#ec4899;padding:6px 12px;border-bottom:1px solid #f9a8d4}
+      .ref-table{width:100%;border-collapse:collapse;font-size:11px;background:#fff}
+      .ref-table th{background:#fdf2f8;border:1px solid #f3e8f0;padding:5px 6px;font-weight:600;color:#9d174d;text-align:center;font-size:10px}
+      .ref-table td{border:1px solid #f3e8f0;padding:5px 8px;color:#333;font-size:11px}
+      .td-type{text-align:center;font-weight:700;font-size:10px;white-space:nowrap}
+      .td-grades{padding:3px 5px}
+      .grade-tag{display:inline-block;background:#fdf2f8;border:1px solid #f9a8d4;border-radius:4px;padding:1px 6px;margin:1px 2px;font-size:10px}
+      .grade-tag b{color:#9d174d;font-weight:700}
+      .ref-after{background:#fef7ff}
+      @media print{body{background:#fff;padding:0}}
+      @page{size:A4;margin:12mm}
+    </style>
+  `;
+  const winName='lrPrintWin_'+Date.now();
+  const w=window.open('',winName,'width=820,height=920,scrollbars=yes');
+  w.document.open();
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>44 보고 - 가죽변경 보고</title>'+printStyles+'</head><body>'+content+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){w.print();},700);
+}
+// 초기화: 오늘 날짜 + 기본 1개 항목
+(function lrInit(){
+  const dEl=document.getElementById('lrDate');
+  if(dEl&&!dEl.value){
+    const t=new Date();
+    dEl.value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+  }
+  if(document.getElementById('lrItemsWrap')&&document.getElementById('lrItemsWrap').children.length===0){
+    lrAddItem();
+  }
+})();
+window.lrAddItem=lrAddItem;
+window.lrRemoveItem=lrRemoveItem;
+window.lrAddRefRow=lrAddRefRow;
+window.lrAddGrade=lrAddGrade;
+window.lrRemoveRefRow=lrRemoveRefRow;
+window.lrHandlePhoto=lrHandlePhoto;
+window.lrClearPhoto=lrClearPhoto;
+window.lrFastPrint=lrFastPrint;
 
 </script>
 
