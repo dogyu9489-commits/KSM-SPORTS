@@ -1058,6 +1058,63 @@
         </div>
         <input type="file" id="logoFileInput3" accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/gif,image/webp" style="display:none" onchange="handleLogoUpload(this,'logoPreviewImg3','logoPreviewWrap3','logoUploadPlaceholder3','logoUploadArea3')">
       </div>
+      <!-- Logo 4 -->
+      <div class="field">
+        <label>Logo Image 4 (선택)</label>
+        <div id="logoUploadArea4" style="border:2px dashed var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fff;transition:all .2s;" onclick="document.getElementById('logoFileInput4').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleLogoDrop(event,'logoPreviewImg4','logoPreviewWrap4','logoUploadPlaceholder4','logoUploadArea4')">
+          <div id="logoUploadPlaceholder4">
+            <div style="font-size:22px;margin-bottom:4px">📎</div>
+            <div style="font-size:12px;color:var(--muted)">클릭 또는 드래그</div>
+            <div style="font-size:10px;color:#d1d5db;margin-top:3px">PNG, JPG, SVG</div>
+          </div>
+          <div id="logoPreviewWrap4" style="display:none">
+            <img id="logoPreviewImg4" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:contain;" alt="Logo 4">
+            <div style="margin-top:6px;display:flex;justify-content:center;gap:6px">
+              <button onclick="event.stopPropagation();document.getElementById('logoFileInput4').click()" style="font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;color:var(--dark)">변경</button>
+              <button onclick="event.stopPropagation();clearLogoUpload('logoPreviewImg4','logoPreviewWrap4','logoUploadPlaceholder4','logoUploadArea4','logoFileInput4')" style="font-size:11px;padding:3px 10px;border:1px solid #fca5a5;border-radius:6px;background:#fff;cursor:pointer;color:#ef4444">제거</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="logoFileInput4" accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/gif,image/webp" style="display:none" onchange="handleLogoUpload(this,'logoPreviewImg4','logoPreviewWrap4','logoUploadPlaceholder4','logoUploadArea4')">
+      </div>
+      <!-- Logo 5 -->
+      <div class="field">
+        <label>Logo Image 5 (선택)</label>
+        <div id="logoUploadArea5" style="border:2px dashed var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fff;transition:all .2s;" onclick="document.getElementById('logoFileInput5').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleLogoDrop(event,'logoPreviewImg5','logoPreviewWrap5','logoUploadPlaceholder5','logoUploadArea5')">
+          <div id="logoUploadPlaceholder5">
+            <div style="font-size:22px;margin-bottom:4px">📎</div>
+            <div style="font-size:12px;color:var(--muted)">클릭 또는 드래그</div>
+            <div style="font-size:10px;color:#d1d5db;margin-top:3px">PNG, JPG, SVG</div>
+          </div>
+          <div id="logoPreviewWrap5" style="display:none">
+            <img id="logoPreviewImg5" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:contain;" alt="Logo 5">
+            <div style="margin-top:6px;display:flex;justify-content:center;gap:6px">
+              <button onclick="event.stopPropagation();document.getElementById('logoFileInput5').click()" style="font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;color:var(--dark)">변경</button>
+              <button onclick="event.stopPropagation();clearLogoUpload('logoPreviewImg5','logoPreviewWrap5','logoUploadPlaceholder5','logoUploadArea5','logoFileInput5')" style="font-size:11px;padding:3px 10px;border:1px solid #fca5a5;border-radius:6px;background:#fff;cursor:pointer;color:#ef4444">제거</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="logoFileInput5" accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/gif,image/webp" style="display:none" onchange="handleLogoUpload(this,'logoPreviewImg5','logoPreviewWrap5','logoUploadPlaceholder5','logoUploadArea5')">
+      </div>
+      <!-- Logo 6 -->
+      <div class="field">
+        <label>Logo Image 6 (선택)</label>
+        <div id="logoUploadArea6" style="border:2px dashed var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fff;transition:all .2s;" onclick="document.getElementById('logoFileInput6').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleLogoDrop(event,'logoPreviewImg6','logoPreviewWrap6','logoUploadPlaceholder6','logoUploadArea6')">
+          <div id="logoUploadPlaceholder6">
+            <div style="font-size:22px;margin-bottom:4px">📎</div>
+            <div style="font-size:12px;color:var(--muted)">클릭 또는 드래그</div>
+            <div style="font-size:10px;color:#d1d5db;margin-top:3px">PNG, JPG, SVG</div>
+          </div>
+          <div id="logoPreviewWrap6" style="display:none">
+            <img id="logoPreviewImg6" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:contain;" alt="Logo 6">
+            <div style="margin-top:6px;display:flex;justify-content:center;gap:6px">
+              <button onclick="event.stopPropagation();document.getElementById('logoFileInput6').click()" style="font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;color:var(--dark)">변경</button>
+              <button onclick="event.stopPropagation();clearLogoUpload('logoPreviewImg6','logoPreviewWrap6','logoUploadPlaceholder6','logoUploadArea6','logoFileInput6')" style="font-size:11px;padding:3px 10px;border:1px solid #fca5a5;border-radius:6px;background:#fff;cursor:pointer;color:#ef4444">제거</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="logoFileInput6" accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/gif,image/webp" style="display:none" onchange="handleLogoUpload(this,'logoPreviewImg6','logoPreviewWrap6','logoUploadPlaceholder6','logoUploadArea6')">
+      </div>
     </div>
     <div class="section-title">주문 정보</div>
     <div class="grid2">
@@ -2726,9 +2783,13 @@ function generatePreview(){
     ['Glove ID',gloveId],
   ];
   const specialInstructions=document.getElementById('specialInstructions').value.trim();
-  const logoImgSrc=document.getElementById('logoPreviewImg').src&&document.getElementById('logoPreviewWrap').style.display!=='none'?document.getElementById('logoPreviewImg').src:'';
-  const logoImgSrc2=document.getElementById('logoPreviewImg2').src&&document.getElementById('logoPreviewWrap2').style.display!=='none'?document.getElementById('logoPreviewImg2').src:'';
-  const logoImgSrc3=document.getElementById('logoPreviewImg3').src&&document.getElementById('logoPreviewWrap3').style.display!=='none'?document.getElementById('logoPreviewImg3').src:'';
+  const logoImgs=[];
+  for(let i=1;i<=6;i++){
+    const suffix=i===1?'':i;
+    const img=document.getElementById('logoPreviewImg'+suffix);
+    const wrap=document.getElementById('logoPreviewWrap'+suffix);
+    if(img&&img.src&&wrap&&wrap.style.display!=='none') logoImgs.push(img.src);
+  }
   function renderSection(title,rows){
     return`<div class="preview-section"><h4>${title}</h4>${rows.map(([k,v])=>{
       let ds='';
@@ -2755,7 +2816,26 @@ function generatePreview(){
         <span>Generated: ${new Date().toLocaleDateString('ko-KR')}</span>
       </div>
       ${specialInstructions?`<div style="margin-top:10px;padding:10px;background:#fdf2f8;border:1px solid #f9a8d4;border-radius:8px"><div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:6px">Special Instructions</div><div style="font-size:13px;color:var(--dark);white-space:pre-wrap;line-height:1.55">${specialInstructions}</div></div>`:''}
-      ${(logoImgSrc||logoImgSrc2||logoImgSrc3)?`<div style="margin-top:10px;padding:10px;background:#f0f9ff;border:1px solid #7dd3fc;border-radius:8px"><div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#0369a1;margin-bottom:6px">Logo Image</div><div style="display:grid;grid-template-columns:${[logoImgSrc,logoImgSrc2,logoImgSrc3].filter(Boolean).length===1?'1fr':[logoImgSrc,logoImgSrc2,logoImgSrc3].filter(Boolean).length===2?'1fr 1fr':'1fr 1fr 1fr'};gap:10px">${logoImgSrc?`<img src="${logoImgSrc}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:6px;display:block;">`:''} ${logoImgSrc2?`<img src="${logoImgSrc2}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:6px;display:block;">`:''} ${logoImgSrc3?`<img src="${logoImgSrc3}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:6px;display:block;">`:''}</div></div>`:''}
+      ${logoImgs.length?(()=>{
+        const n=logoImgs.length;
+        // 레이아웃: 1=전체 1장, 2=2열, 3=3열, 4=2x2, 5=3+2, 6=3x2
+        // A4 한장 안에 반드시 들어가도록 보수적으로 설정
+        let cols, rows, rowH;
+        if(n===1){cols=1;rows=[[0]];rowH=300;}
+        else if(n===2){cols=2;rows=[[0,1]];rowH=240;}
+        else if(n===3){cols=3;rows=[[0,1,2]];rowH=200;}
+        else if(n===4){cols=2;rows=[[0,1],[2,3]];rowH=145;}
+        else if(n===5){cols=3;rows=[[0,1,2],[3,4]];rowH=140;}
+        else {cols=3;rows=[[0,1,2],[3,4,5]];rowH=140;}
+        // 셀을 고정 높이 박스로 만들고 이미지는 그 안에서 contain
+        const rowsHtml=rows.map((row,ri)=>{
+          const gridStyle=`display:grid;grid-template-columns:repeat(${cols},1fr);gap:8px;${ri<rows.length-1?'margin-bottom:8px;':''}`;
+          const cellStyle=`height:${rowH}px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:6px;overflow:hidden;`;
+          const imgStyle=`max-width:100%;max-height:100%;object-fit:contain;display:block;`;
+          return `<div style="${gridStyle}">${row.map(idx=>`<div style="${cellStyle}"><img src="${logoImgs[idx]}" style="${imgStyle}"></div>`).join('')}</div>`;
+        }).join('');
+        return `<div style="margin-top:10px;padding:10px;background:#f0f9ff;border:1px solid #7dd3fc;border-radius:8px;page-break-inside:avoid;break-inside:avoid;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#0369a1;margin-bottom:6px">Logo Image</div>${rowsHtml}</div>`;
+      })():''}
     </div>`;
 }
 
@@ -2777,7 +2857,7 @@ function fastPrint(){
       .color-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;border:1px solid rgba(0,0,0,.15)}
       .order-meta{display:none}
       .badge{display:inline-block;background:#fdf2f8;color:#be185d;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
-      img{max-width:100%!important;max-height:500px!important;object-fit:contain;border-radius:6px;display:block}
+      img{max-width:100%;object-fit:contain;border-radius:6px;display:block}
       @media print{
         @page{margin:6mm 10mm}
         body{padding:0}
