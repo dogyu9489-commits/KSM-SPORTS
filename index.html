@@ -533,6 +533,12 @@
 #purchase-page .pr-photo-hint{font-size:10px;color:#9ca3af;margin-top:4px}
 #purchase-page .pr-photo-clear{position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.9);border:1px solid #e5e7eb;color:#ef4444;border-radius:50%;width:24px;height:24px;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:13px;padding:0}
 #purchase-page .pr-photo-clear:hover{background:#fee2e2}
+#purchase-page .pr-photo{position:relative}
+#purchase-page .pr-photo-remove{position:absolute;top:8px;right:8px;background:#fff;border:1px solid #fca5a5;color:#ef4444;border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;z-index:2;transition:all .15s}
+#purchase-page .pr-photo-remove:hover{background:#fee2e2;border-color:#ef4444}
+#purchase-page .pr-photo-title-edit{width:100%;background:transparent;border:1px solid transparent;border-radius:4px;font-size:12px;font-weight:600;color:#6b7280;text-align:center;padding:3px 6px;font-family:inherit;outline:none;transition:border .15s}
+#purchase-page .pr-photo-title-edit:hover{border-color:#e5e7eb}
+#purchase-page .pr-photo-title-edit:focus{border-color:#ec4899;background:#fff}
 #purchase-page .pr-photo-desc{width:100%;border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px;font-size:12px;font-family:inherit;outline:none;transition:border .15s}
 #purchase-page .pr-photo-desc:focus{border-color:#ec4899}
 #purchase-page .pr-btn{width:100%;padding:14px;background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:opacity .2s}
@@ -1401,30 +1407,12 @@
 
       <!-- 3. 사진 첨부 -->
       <div class="pr-section">
-        <div class="pr-section-title">3. 사진 첨부 (Photo Attachments)</div>
-        <div class="pr-hint">💡 구매하려는 물품의 실물, 파손되어 교체가 필요한 대상, 또는 견본 사진을 첨부해 주세요.</div>
-        <div class="pr-photo-grid">
-          <div class="pr-photo">
-            <div class="pr-photo-title">📷 참고 사진 1 (물품 정면/전체)</div>
-            <div class="pr-photo-area" id="prPhotoArea1" onclick="if(event.target.id!=='prPhotoClear1')document.getElementById('prPhotoInput1').click()">
-              <span class="pr-photo-plus" id="prPhotoPlus1">＋</span>
-              <img id="prPhotoImg1" src="" style="display:none" alt="">
-              <button type="button" class="pr-photo-clear" id="prPhotoClear1" onclick="prClearPhoto(1);event.stopPropagation()">✕</button>
-            </div>
-            <input type="file" accept="image/*" id="prPhotoInput1" style="display:none" onchange="prHandlePhoto(1)">
-            <input type="text" class="pr-photo-desc" id="prPhotoDesc1" placeholder="사진 설명 (예: 기존에 사용 중인 부품 모습)">
-          </div>
-          <div class="pr-photo">
-            <div class="pr-photo-title">📷 참고 사진 2 (상세 규격/모델명/파손 부위)</div>
-            <div class="pr-photo-area" id="prPhotoArea2" onclick="if(event.target.id!=='prPhotoClear2')document.getElementById('prPhotoInput2').click()">
-              <span class="pr-photo-plus" id="prPhotoPlus2">＋</span>
-              <img id="prPhotoImg2" src="" style="display:none" alt="">
-              <button type="button" class="pr-photo-clear" id="prPhotoClear2" onclick="prClearPhoto(2);event.stopPropagation()">✕</button>
-            </div>
-            <input type="file" accept="image/*" id="prPhotoInput2" style="display:none" onchange="prHandlePhoto(2)">
-            <input type="text" class="pr-photo-desc" id="prPhotoDesc2" placeholder="사진 설명 (예: 마모되어 교체가 필요한 부분 상세)">
-          </div>
+        <div class="pr-section-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <span>3. 사진 첨부 (Photo Attachments)</span>
+          <button type="button" class="pr-btn-add" onclick="prAddPhoto()">+ 사진 추가</button>
         </div>
+        <div class="pr-hint">💡 구매하려는 물품의 실물, 파손되어 교체가 필요한 대상, 또는 견본 사진을 첨부해 주세요. 필요한 만큼 사진을 추가하거나 삭제할 수 있습니다.</div>
+        <div class="pr-photo-grid" id="prPhotoGrid"></div>
       </div>
 
       <!-- 4. 납품 및 거래처 정보 -->
@@ -5352,6 +5340,48 @@ function prRecalc(){
   const gtEl=document.getElementById('prGrandTotal');
   if(gtEl)gtEl.textContent=prFormatMoney(grand,c);
 }
+// === 동적 사진 첨부 시스템 ===
+let prPhotoUid = 0;
+function prAddPhoto(initialTitle){
+  prPhotoUid++;
+  const id = prPhotoUid;
+  const grid = document.getElementById('prPhotoGrid');
+  if(!grid) return;
+  const count = grid.querySelectorAll('.pr-photo').length + 1;
+  const defaultTitle = initialTitle || ('📷 참고 사진 ' + count);
+  const div = document.createElement('div');
+  div.className = 'pr-photo';
+  div.dataset.photoId = id;
+  div.innerHTML = `
+    <button type="button" class="pr-photo-remove" onclick="prRemovePhoto(${id})" title="이 사진 슬롯 삭제">✕ 삭제</button>
+    <input type="text" class="pr-photo-title-edit" value="${defaultTitle}" placeholder="사진 제목 (예: 📷 참고 사진 1)">
+    <div class="pr-photo-area" id="prPhotoArea${id}" onclick="prPhotoAreaClick(event, ${id})">
+      <span class="pr-photo-plus" id="prPhotoPlus${id}">＋</span>
+      <img id="prPhotoImg${id}" src="" style="display:none" alt="">
+      <button type="button" class="pr-photo-clear" id="prPhotoClear${id}" onclick="prClearPhoto(${id});event.stopPropagation()">✕</button>
+    </div>
+    <input type="file" accept="image/*" id="prPhotoInput${id}" style="display:none" onchange="prHandlePhoto(${id})">
+    <input type="text" class="pr-photo-desc" id="prPhotoDesc${id}" placeholder="사진 설명 (예: 기존에 사용 중인 부품 모습)">
+  `;
+  grid.appendChild(div);
+}
+function prPhotoAreaClick(event, n){
+  // 이미지 영역 클릭 시 파일 선택. 단, 클리어(X) 버튼 클릭이면 무시
+  if(event.target && (event.target.id === 'prPhotoClear'+n || event.target.classList.contains('pr-photo-clear'))) return;
+  const input = document.getElementById('prPhotoInput'+n);
+  if(input) input.click();
+}
+function prRemovePhoto(id){
+  const grid = document.getElementById('prPhotoGrid');
+  if(!grid) return;
+  const slot = grid.querySelector('.pr-photo[data-photo-id="'+id+'"]');
+  if(!slot) return;
+  // 마지막 1개 슬롯 삭제 시 경고
+  if(grid.querySelectorAll('.pr-photo').length <= 1){
+    if(!confirm('마지막 사진 슬롯입니다. 삭제하시겠습니까?\n(필요 시 "+ 사진 추가" 버튼으로 다시 추가할 수 있습니다.)')) return;
+  }
+  slot.remove();
+}
 function prHandlePhoto(n){
   const input=document.getElementById('prPhotoInput'+n);
   const file=input.files[0];if(!file)return;
@@ -5379,6 +5409,12 @@ function prFmtDate(d){
 }
 function prEscape(s){
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function prGetLogoSrc(){
+  // 비밀번호 화면의 KSM Sports 로고 base64 이미지를 그대로 재사용
+  const pwLogoImg = document.querySelector('#pwScreen .pw-logo img');
+  if(pwLogoImg && pwLogoImg.src) return pwLogoImg.src;
+  return '';
 }
 function prFastPrint(){
   const cur=prGetCurrency();
@@ -5408,14 +5444,22 @@ function prFastPrint(){
       rows.push({idx:rows.length+1,name,qty,unit,total,rem,isDisc:false});
     }
   });
-  const img1El=document.getElementById('prPhotoImg1');
-  const img2El=document.getElementById('prPhotoImg2');
-  const photoShow1=img1El.src&&img1El.style.display!=='none';
-  const photoShow2=img2El.src&&img2El.style.display!=='none';
-  const photoImg1=img1El.src||'';
-  const photoImg2=img2El.src||'';
-  const photoDesc1=document.getElementById('prPhotoDesc1').value||'';
-  const photoDesc2=document.getElementById('prPhotoDesc2').value||'';
+  // 동적 사진 슬롯 수집
+  const photoSlots=[];
+  document.querySelectorAll('#prPhotoGrid .pr-photo').forEach(slot=>{
+    const id=slot.dataset.photoId;
+    const titleEl=slot.querySelector('.pr-photo-title-edit');
+    const imgEl=document.getElementById('prPhotoImg'+id);
+    const descEl=document.getElementById('prPhotoDesc'+id);
+    if(!imgEl) return;
+    const hasImg=imgEl.src && imgEl.style.display!=='none';
+    photoSlots.push({
+      title: titleEl?titleEl.value:'📷 참고 사진',
+      hasImg: hasImg,
+      img: imgEl.src||'',
+      desc: descEl?descEl.value:''
+    });
+  });
   const subtotal=document.getElementById('prSubtotal').textContent;
   const discountTotal=document.getElementById('prDiscountTotal').textContent;
   const grandTotal=document.getElementById('prGrandTotal').textContent;
@@ -5442,10 +5486,45 @@ function prFastPrint(){
     </tr>`;
   }).join(''):`<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:12px">(요청 항목 없음)</td></tr>`;
 
+  // 동적 사진 HTML 생성: 2장씩 한 행으로 묶어 표시
+  let photosHtml='';
+  if(photoSlots.length===0){
+    photosHtml='<div style="text-align:center;color:#9ca3af;font-size:11px;font-style:italic;padding:14px;border:1px solid #d1d5db;border-radius:4px;background:#fafafa">첨부된 사진 없음</div>';
+  } else {
+    const chunks=[];
+    for(let i=0;i<photoSlots.length;i+=2){
+      chunks.push(photoSlots.slice(i,i+2));
+    }
+    photosHtml=chunks.map(pair=>{
+      const cellWidth = pair.length===1 ? '100%' : '50%';
+      const headTh=pair.map(p=>`<th style="width:${cellWidth}">${prEscape(p.title)}</th>`).join('');
+      const photoTd=pair.map(p=>`<td class="photo-cell">${p.hasImg?`<img src="${p.img}">`:'<div class="no-photo">사진 없음</div>'}</td>`).join('');
+      const descTd=pair.map(p=>`<td class="desc">${prEscape(p.desc)||'-'}</td>`).join('');
+      return`<table class="pr-photos">
+        <thead><tr>${headTh}</tr></thead>
+        <tbody>
+          <tr>${photoTd}</tr>
+          <tr>${descTd}</tr>
+        </tbody>
+      </table>`;
+    }).join('<div style="height:8px"></div>');
+  }
+
+  const logoSrc = prGetLogoSrc();
+  const titleBlock = logoSrc
+    ? `<div class="pr-title-row">
+         <div class="pr-title-side pr-title-side-left"><img class="pr-logo" src="${logoSrc}" alt="KSM Sports"></div>
+         <div class="pr-title-text">
+           <h1>구매 요청서</h1>
+           <div class="pr-doc-sub">Purchase Request Form · KSM Sports</div>
+         </div>
+         <div class="pr-title-side pr-title-side-right"></div>
+       </div>`
+    : `<h1>구매 요청서</h1><div class="pr-doc-sub">Purchase Request Form · KSM Sports</div>`;
+
   const content=`
     <div class="pr-doc">
-      <h1>구매 요청서</h1>
-      <div class="pr-doc-sub">Purchase Request Form · KSM Sports</div>
+      ${titleBlock}
 
       <table class="pr-approve">
         <thead>
@@ -5501,24 +5580,7 @@ function prFastPrint(){
       </table>
 
       <h2>3. 사진 첨부 (Photo Attachments)</h2>
-      <table class="pr-photos">
-        <thead>
-          <tr>
-            <th>📷 참고 사진 1 (물품 정면/전체)</th>
-            <th>📷 참고 사진 2 (상세 규격/모델명/파손 부위)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="photo-cell">${photoShow1?`<img src="${photoImg1}">`:'<div class="no-photo">사진 없음</div>'}</td>
-            <td class="photo-cell">${photoShow2?`<img src="${photoImg2}">`:'<div class="no-photo">사진 없음</div>'}</td>
-          </tr>
-          <tr>
-            <td class="desc">${prEscape(photoDesc1)||'-'}</td>
-            <td class="desc">${prEscape(photoDesc2)||'-'}</td>
-          </tr>
-        </tbody>
-      </table>
+      ${photosHtml}
 
       <h2>4. 납품 및 거래처 정보 (Vendor &amp; Delivery Information)</h2>
       <table class="pr-info">
@@ -5536,6 +5598,13 @@ function prFastPrint(){
       html,body{height:auto}
       body{font-family:'Barlow',sans-serif;background:#fff;padding:4px 6px;color:#1a1a2e;font-size:12px;line-height:1.35}
       .pr-doc{max-width:100%;margin:0 auto;padding-right:2px}
+      .pr-title-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a1a2e}
+      .pr-title-side{flex:0 0 90px;display:flex;align-items:center}
+      .pr-title-side-right{justify-content:flex-end}
+      .pr-logo{width:90px;height:auto;object-fit:contain}
+      .pr-title-text{flex:1;text-align:center}
+      .pr-title-text h1{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:2.5px;margin-bottom:3px;color:#1a1a2e}
+      .pr-title-text .pr-doc-sub{font-size:11px;color:#6b7280;letter-spacing:.8px}
       .pr-doc h1{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;text-align:center;letter-spacing:2.5px;margin-bottom:3px;color:#1a1a2e}
       .pr-doc-sub{text-align:center;font-size:11px;color:#6b7280;margin-bottom:12px;letter-spacing:.8px}
       .pr-doc h2{font-size:13px;font-weight:700;color:#1a1a2e;margin:12px 0 6px;padding:5px 10px;background:#f9fafb;border-left:3px solid #1a1a2e;page-break-after:avoid}
@@ -5574,7 +5643,7 @@ function prFastPrint(){
   w.focus();
   setTimeout(function(){w.print();},700);
 }
-// 최초 로딩 시 기본 3행 + 오늘 날짜 세팅 (한 번만)
+// 최초 로딩 시 기본 3행 + 오늘 날짜 + 사진 슬롯 2개 세팅 (한 번만)
 (function prInit(){
   if(!document.getElementById('prItemsBody'))return;
   if(document.getElementById('prItemsBody').children.length===0){
@@ -5586,6 +5655,12 @@ function prFastPrint(){
     const iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
     dEl.value=iso;
   }
+  // 기본 사진 슬롯 2개 생성
+  const grid=document.getElementById('prPhotoGrid');
+  if(grid && grid.children.length===0){
+    prAddPhoto('📷 참고 사진 1 (물품 정면/전체)');
+    prAddPhoto('📷 참고 사진 2 (상세 규격/모델명/파손 부위)');
+  }
 })();
 window.prAddRow=prAddRow;
 window.prAddDiscountRow=prAddDiscountRow;
@@ -5593,6 +5668,9 @@ window.prRemoveRow=prRemoveRow;
 window.prRecalc=prRecalc;
 window.prHandlePhoto=prHandlePhoto;
 window.prClearPhoto=prClearPhoto;
+window.prAddPhoto=prAddPhoto;
+window.prRemovePhoto=prRemovePhoto;
+window.prPhotoAreaClick=prPhotoAreaClick;
 window.prFastPrint=prFastPrint;
 
 /* ── Leather Change Report ── */
