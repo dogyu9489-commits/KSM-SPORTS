@@ -617,10 +617,33 @@
 #leather-report-page .lr-btn-print:hover{border-color:var(--lr);color:var(--lr);opacity:1}
 #leather-report-page .lr-btn-add{background:#fff;color:var(--lr);border:1px solid var(--lr-border);padding:10px 18px;font-size:13px;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s}
 #leather-report-page .lr-btn-add:hover{background:var(--lr-light)}
+
+/* ── Sub-tabs (가죽 / 스펙) ── */
+#leather-report-page .lr-subtabs{display:flex;gap:6px;background:#fdf2f8;padding:5px;border:1px solid var(--lr-border);border-radius:10px;margin-bottom:18px}
+#leather-report-page .lr-subtab{flex:1;padding:10px 14px;background:transparent;border:none;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;color:#9d174d;cursor:pointer;transition:all .15s}
+#leather-report-page .lr-subtab:hover{background:#fff}
+#leather-report-page .lr-subtab.active{background:#fff;color:var(--lr);box-shadow:0 1px 3px rgba(236,72,153,.15)}
+#leather-report-page .lr-subtab-pane{display:none}
+#leather-report-page .lr-subtab-pane.active{display:block}
+
+/* ── Spec change report: dynamic desc/final blocks ── */
+#leather-report-page .lr-block{position:relative;background:#fafafa;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px 10px 12px;margin-top:10px}
+#leather-report-page .lr-block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+#leather-report-page .lr-block-label{font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.3px}
+#leather-report-page .lr-block-label.final{color:var(--lr)}
+#leather-report-page .lr-block-del{background:none;border:1px solid #fca5a5;color:#ef4444;cursor:pointer;font-size:11px;padding:2px 8px;border-radius:5px;font-family:inherit}
+#leather-report-page .lr-block-del:hover{background:#fee2e2}
+#leather-report-page .lr-block textarea{width:100%;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit;color:#1a1a2e;outline:none;resize:vertical;min-height:50px;background:#fff}
+#leather-report-page .lr-block textarea:focus{border-color:var(--lr)}
+#leather-report-page .lr-block-add-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+#leather-report-page .lr-block-add-btn{flex:1;background:#fff;color:var(--lr);border:1px dashed var(--lr-border);padding:8px 12px;font-size:12px;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s;min-width:120px}
+#leather-report-page .lr-block-add-btn:hover{background:var(--lr-light);border-style:solid}
+
 @media (max-width:640px){
   #leather-report-page .lr-grid{grid-template-columns:1fr;gap:6px}
   #leather-report-page .lr-photo-row{grid-template-columns:1fr;gap:6px}
   #leather-report-page .lr-arrow{transform:rotate(90deg)}
+  #leather-report-page .lr-subtab{font-size:12px;padding:8px 10px}
 }
 
 </style>
@@ -661,7 +684,7 @@
   <button class="page-tab active" data-page="notice">공지사항</button>
   <button class="page-tab" data-page="schedule">매니저 일정</button>
   <button class="page-tab" data-page="tracker">가죽 컬러 트래커</button>
-  <button class="page-tab" data-page="leather-report">가죽변경 보고</button>
+  <button class="page-tab" data-page="leather-report">변경 보고</button>
   <button class="page-tab" data-page="order">오더 시트</button>
   <button class="page-tab" data-page="purchase">구매 요청서</button>
   <button class="page-tab" data-page="payment">결재 시스템</button>
@@ -961,32 +984,64 @@
 </div>
 </div><!-- /page-tracker -->
 
-<!-- PAGE: 가죽변경 보고 -->
+<!-- PAGE: 변경 보고 (Leather + Spec) -->
 <div id="page-leather-report" class="page-content">
   <div id="leather-report-page">
     <div class="app">
-      <h1>가죽변경 보고</h1>
-      <p class="lr-subtitle">Leather Change Report · 44 보고</p>
+      <h1>변경 보고</h1>
+      <p class="lr-subtitle">Change Report · 44 보고</p>
 
-      <!-- 기본 정보 -->
-      <div class="lr-section">
-        <div class="lr-section-title">보고 정보</div>
-        <div class="lr-grid">
-          <label>보고일자</label>
-          <input type="date" id="lrDate">
-          <label>보고자</label>
-          <input type="text" id="lrReporter" placeholder="이름 입력">
-          <label>보고 제목</label>
-          <input type="text" id="lrTitle" placeholder="예: 회색 가죽 변경 보고">
-        </div>
+      <!-- 서브탭 -->
+      <div class="lr-subtabs">
+        <button type="button" class="lr-subtab active" data-subtab="leather" onclick="lrSwitchSubtab('leather')">🎨 가죽 변경 보고</button>
+        <button type="button" class="lr-subtab" data-subtab="spec" onclick="lrSwitchSubtab('spec')">⚙️ 스펙 변경 보고</button>
       </div>
 
-      <!-- 변경 항목들 -->
-      <div id="lrItemsWrap"></div>
+      <!-- ───── 가죽 변경 보고 ───── -->
+      <div id="lrSubtabLeather" class="lr-subtab-pane active">
+        <!-- 기본 정보 -->
+        <div class="lr-section">
+          <div class="lr-section-title">보고 정보</div>
+          <div class="lr-grid">
+            <label>보고일자</label>
+            <input type="date" id="lrDate">
+            <label>보고자</label>
+            <input type="text" id="lrReporter" placeholder="이름 입력">
+            <label>보고 제목</label>
+            <input type="text" id="lrTitle" placeholder="예: 회색 가죽 변경 보고">
+          </div>
+        </div>
 
-      <button class="lr-btn-add" onclick="lrAddItem()">+ 변경 항목 추가</button>
+        <!-- 변경 항목들 -->
+        <div id="lrItemsWrap"></div>
 
-      <button class="lr-btn lr-btn-print" onclick="lrFastPrint()" style="margin-top:16px">🖨️ 인쇄 / PDF 저장</button>
+        <button class="lr-btn-add" onclick="lrAddItem()">+ 변경 항목 추가</button>
+
+        <button class="lr-btn lr-btn-print" onclick="lrFastPrint()" style="margin-top:16px">🖨️ 인쇄 / PDF 저장</button>
+      </div>
+
+      <!-- ───── 스펙 변경 보고 ───── -->
+      <div id="lrSubtabSpec" class="lr-subtab-pane">
+        <!-- 기본 정보 -->
+        <div class="lr-section">
+          <div class="lr-section-title">보고 정보</div>
+          <div class="lr-grid">
+            <label>보고일자</label>
+            <input type="date" id="srDate">
+            <label>보고자</label>
+            <input type="text" id="srReporter" placeholder="이름 입력">
+            <label>보고 제목</label>
+            <input type="text" id="srTitle" placeholder="예: 글러브 스펙 변경 보고">
+          </div>
+        </div>
+
+        <!-- 변경 항목들 -->
+        <div id="srItemsWrap"></div>
+
+        <button class="lr-btn-add" onclick="srAddItem()">+ 변경 항목 추가</button>
+
+        <button class="lr-btn lr-btn-print" onclick="srFastPrint()" style="margin-top:16px">🖨️ 인쇄 / PDF 저장</button>
+      </div>
     </div>
     <div style="text-align:center;padding:1.2rem;font-size:12px;color:var(--text2);letter-spacing:.5px;font-family:'Barlow',sans-serif;border-top:1px solid var(--border);margin-top:1rem;background:#fff;">
       © Copyright Dogyu Jang (KSM SPORTS). All rights reserved.
@@ -5967,6 +6022,272 @@ window.lrRemoveRefRow=lrRemoveRefRow;
 window.lrHandlePhoto=lrHandlePhoto;
 window.lrClearPhoto=lrClearPhoto;
 window.lrFastPrint=lrFastPrint;
+
+/* ── Sub-tab switching (변경 보고: 가죽 / 스펙) ── */
+function lrSwitchSubtab(name){
+  document.querySelectorAll('#leather-report-page .lr-subtab').forEach(b=>{
+    b.classList.toggle('active', b.dataset.subtab===name);
+  });
+  document.querySelectorAll('#leather-report-page .lr-subtab-pane').forEach(p=>p.classList.remove('active'));
+  if(name==='leather'){
+    document.getElementById('lrSubtabLeather').classList.add('active');
+  }else{
+    document.getElementById('lrSubtabSpec').classList.add('active');
+  }
+}
+window.lrSwitchSubtab=lrSwitchSubtab;
+
+/* ───────────────────────────────────────────── */
+/* ── Spec Change Report (스펙 변경 보고) ── */
+/* ───────────────────────────────────────────── */
+let srUid=0;
+function srRenumber(){
+  document.querySelectorAll('#srItemsWrap .lr-item').forEach((item,i)=>{
+    const numEl=item.querySelector('.lr-item-num');
+    if(numEl)numEl.textContent=(i+1)+'. 변경 내역';
+  });
+}
+function srAddItem(){
+  srUid++;
+  const n=srUid;
+  const wrap=document.getElementById('srItemsWrap');
+  const div=document.createElement('div');
+  div.className='lr-item';
+  div.id='srItem'+n;
+  div.innerHTML=`
+    <div class="lr-item-header">
+      <span class="lr-item-num">1. 변경 내역</span>
+      <button type="button" class="lr-item-del" onclick="srRemoveItem(${n})">✕ 삭제</button>
+    </div>
+    <div class="lr-photo-row">
+      <div class="lr-photo">
+        <div class="lr-photo-title">📷 변경 전 (Before)</div>
+        <div class="lr-photo-area" id="srPhotoArea${n}a" onclick="if(event.target.id!=='srPhotoClear${n}a')document.getElementById('srPhotoInput${n}a').click()">
+          <span class="lr-photo-plus" id="srPhotoPlus${n}a">＋</span>
+          <img id="srPhotoImg${n}a" src="" style="display:none" alt="">
+          <button type="button" class="lr-photo-clear" id="srPhotoClear${n}a" onclick="srClearPhoto(${n},'a');event.stopPropagation()">✕</button>
+        </div>
+        <input type="file" accept="image/*" id="srPhotoInput${n}a" style="display:none" onchange="srHandlePhoto(${n},'a')">
+      </div>
+      <div class="lr-arrow">→</div>
+      <div class="lr-photo">
+        <div class="lr-photo-title">📷 변경 후 (After)</div>
+        <div class="lr-photo-area" id="srPhotoArea${n}b" onclick="if(event.target.id!=='srPhotoClear${n}b')document.getElementById('srPhotoInput${n}b').click()">
+          <span class="lr-photo-plus" id="srPhotoPlus${n}b">＋</span>
+          <img id="srPhotoImg${n}b" src="" style="display:none" alt="">
+          <button type="button" class="lr-photo-clear" id="srPhotoClear${n}b" onclick="srClearPhoto(${n},'b');event.stopPropagation()">✕</button>
+        </div>
+        <input type="file" accept="image/*" id="srPhotoInput${n}b" style="display:none" onchange="srHandlePhoto(${n},'b')">
+      </div>
+    </div>
+
+    <!-- 변경 사유 및 상세 내용 (추가/삭제 가능) -->
+    <div id="srDescWrap${n}"></div>
+
+    <!-- 최종 입력란 (추가/삭제 가능) -->
+    <div id="srFinalWrap${n}"></div>
+
+    <!-- 추가 버튼들 -->
+    <div class="lr-block-add-row">
+      <button type="button" class="lr-block-add-btn" onclick="srAddDescBlock(${n})">+ 변경 사유 / 상세 내용 추가</button>
+      <button type="button" class="lr-block-add-btn" onclick="srAddFinalBlock(${n})">+ 최종 입력란 추가</button>
+    </div>
+  `;
+  wrap.appendChild(div);
+  // 초기에 기본 1개씩 추가
+  srAddDescBlock(n);
+  srAddFinalBlock(n);
+  srRenumber();
+}
+function srRemoveItem(n){
+  const el=document.getElementById('srItem'+n);
+  if(el)el.remove();
+  srRenumber();
+}
+let srBlockUid=0;
+function srAddDescBlock(itemN){
+  srBlockUid++;
+  const wrap=document.getElementById('srDescWrap'+itemN);
+  if(!wrap)return;
+  const id='srDesc_'+itemN+'_'+srBlockUid;
+  const div=document.createElement('div');
+  div.className='lr-block';
+  div.id=id;
+  div.innerHTML=`
+    <div class="lr-block-head">
+      <span class="lr-block-label">변경 사유 / 상세 내용</span>
+      <button type="button" class="lr-block-del" onclick="document.getElementById('${id}').remove()">✕ 삭제</button>
+    </div>
+    <textarea placeholder="변경 사유 및 상세 내용을 입력하세요." rows="3"></textarea>
+  `;
+  wrap.appendChild(div);
+}
+function srAddFinalBlock(itemN){
+  srBlockUid++;
+  const wrap=document.getElementById('srFinalWrap'+itemN);
+  if(!wrap)return;
+  const id='srFinal_'+itemN+'_'+srBlockUid;
+  const div=document.createElement('div');
+  div.className='lr-block';
+  div.id=id;
+  div.innerHTML=`
+    <div class="lr-block-head">
+      <span class="lr-block-label final">최종 입력란</span>
+      <button type="button" class="lr-block-del" onclick="document.getElementById('${id}').remove()">✕ 삭제</button>
+    </div>
+    <textarea placeholder="최종 결정 사항 / 결재 의견 / 확정 내용 등을 입력하세요." rows="3"></textarea>
+  `;
+  wrap.appendChild(div);
+}
+function srHandlePhoto(n,ab){
+  const input=document.getElementById('srPhotoInput'+n+ab);
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=document.getElementById('srPhotoImg'+n+ab);
+    img.src=e.target.result;img.style.display='block';
+    document.getElementById('srPhotoPlus'+n+ab).style.display='none';
+    document.getElementById('srPhotoClear'+n+ab).style.display='flex';
+  };
+  reader.readAsDataURL(file);
+}
+function srClearPhoto(n,ab){
+  const img=document.getElementById('srPhotoImg'+n+ab);
+  img.src='';img.style.display='none';
+  document.getElementById('srPhotoPlus'+n+ab).style.display='inline';
+  document.getElementById('srPhotoClear'+n+ab).style.display='none';
+  document.getElementById('srPhotoInput'+n+ab).value='';
+}
+function srFastPrint(){
+  const date=document.getElementById('srDate').value||'';
+  const reporter=document.getElementById('srReporter').value||'';
+  const title=document.getElementById('srTitle').value||'스펙 변경 보고';
+  const items=document.querySelectorAll('#srItemsWrap .lr-item');
+  let itemsHtml='';
+  let idx=0;
+  items.forEach(item=>{
+    idx++;
+    const id=item.id.replace('srItem','');
+    const imgA=document.getElementById('srPhotoImg'+id+'a');
+    const imgB=document.getElementById('srPhotoImg'+id+'b');
+    const showA=imgA&&imgA.src&&imgA.style.display!=='none';
+    const showB=imgB&&imgB.src&&imgB.style.display!=='none';
+
+    // 변경 사유/상세 내용 블록들 수집
+    const descBlocks=[];
+    const descWrap=document.getElementById('srDescWrap'+id);
+    if(descWrap){
+      descWrap.querySelectorAll('.lr-block textarea').forEach(t=>{
+        const v=t.value||'';
+        if(v.trim())descBlocks.push(v);
+      });
+    }
+    // 최종 입력란 블록들 수집
+    const finalBlocks=[];
+    const finalWrap=document.getElementById('srFinalWrap'+id);
+    if(finalWrap){
+      finalWrap.querySelectorAll('.lr-block textarea').forEach(t=>{
+        const v=t.value||'';
+        if(v.trim())finalBlocks.push(v);
+      });
+    }
+
+    const descHtml=descBlocks.length>0
+      ? descBlocks.map((d,i)=>`<div class="desc-box"><div class="desc-label">변경 사유 / 상세 내용${descBlocks.length>1?' #'+(i+1):''}</div>${lrEsc(d).replace(/<br>/g,'\n')}</div>`).join('')
+      : '';
+    const finalHtml=finalBlocks.length>0
+      ? finalBlocks.map((d,i)=>`<div class="final-box"><div class="final-label">최종 입력${finalBlocks.length>1?' #'+(i+1):''}</div>${lrEsc(d).replace(/<br>/g,'\n')}</div>`).join('')
+      : '';
+
+    itemsHtml+=`
+      <div class="card">
+        <div class="item-header">${idx}. 변경 내역</div>
+        <div class="photo-row">
+          <div class="photo-box">
+            <div class="photo-label">📷 변경 전 (Before)</div>
+            <div class="photo-inner">${showA?'<img src="'+imgA.src+'">':'<div class="no-photo">사진 없음</div>'}</div>
+          </div>
+          <div class="photo-arrow">→</div>
+          <div class="photo-box">
+            <div class="photo-label">📷 변경 후 (After)</div>
+            <div class="photo-inner">${showB?'<img src="'+imgB.src+'">':'<div class="no-photo">사진 없음</div>'}</div>
+          </div>
+        </div>
+        ${descHtml}
+        ${finalHtml}
+      </div>
+    `;
+  });
+  const content=`
+    <div class="lr-doc">
+      <h1>스펙 변경 보고</h1>
+      <p class="lr-sub">Spec Change Report · 44 보고</p>
+      <div class="card">
+        <div class="card-title">보고 정보</div>
+        <table class="info-tbl">
+          <tr><th>보고일자</th><td>${lrFmtDate(date)}</td></tr>
+          <tr><th>보고자</th><td>${lrEsc(reporter)||'-'}</td></tr>
+          <tr><th>보고 제목</th><td>${lrEsc(title)}</td></tr>
+        </table>
+      </div>
+      ${itemsHtml||'<div class="card" style="text-align:center;color:#9ca3af;padding:30px">변경 항목이 없습니다.</div>'}
+    </div>
+  `;
+  const printStyles=`
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+      body{font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;background:#f7f7f5;padding:10px;color:#1a1a2e;font-size:12px;line-height:1.4}
+      .lr-doc{max-width:99%;margin:0 auto}
+      .lr-doc h1{font-size:22px;font-weight:800;letter-spacing:1px;margin-bottom:2px;color:#1a1a2e}
+      .lr-sub{font-size:11px;color:#6b7280;margin-bottom:12px}
+      .card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+      .card-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid #ec4899}
+      .info-tbl{width:100%;border-collapse:collapse;font-size:12px}
+      .info-tbl th{width:90px;text-align:left;padding:6px 8px;color:#6b7280;font-weight:500;font-size:11px;vertical-align:middle}
+      .info-tbl td{padding:6px 8px;color:#1a1a2e}
+      .item-header{font-size:14px;font-weight:700;color:#ec4899;margin-bottom:10px}
+      .photo-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+      .photo-box{flex:1;border:1px solid #e5e7eb;border-radius:8px;padding:8px;background:#fafafa;text-align:center}
+      .photo-label{font-size:9px;font-weight:600;color:#6b7280;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+      .photo-inner{min-height:140px;display:flex;align-items:center;justify-content:center}
+      .photo-inner img{max-width:100%;max-height:180px;object-fit:contain}
+      .photo-arrow{font-size:24px;font-weight:700;color:#ec4899;flex-shrink:0;padding:0 4px}
+      .no-photo{color:#d1d5db;font-size:10px;font-style:italic}
+      .desc-box{background:#fafafa;border:1px solid #e5e7eb;border-radius:7px;padding:10px 12px;margin-bottom:8px;font-size:12px;line-height:1.6;color:#333;white-space:pre-line}
+      .desc-label{font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+      .final-box{background:#fdf2f8;border:1px solid #f9a8d4;border-radius:7px;padding:10px 12px;margin-bottom:8px;font-size:12px;line-height:1.6;color:#333;white-space:pre-line}
+      .final-label{font-size:10px;font-weight:700;color:#9d174d;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+      @media print{body{background:#fff;padding:0}}
+      @page{size:A4;margin:12mm}
+    </style>
+  `;
+  const winName='srPrintWin_'+Date.now();
+  const w=window.open('',winName,'width=820,height=920,scrollbars=yes');
+  w.document.open();
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>44 보고 - 스펙변경 보고</title>'+printStyles+'</head><body>'+content+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){w.print();},700);
+}
+
+// 초기화: 오늘 날짜 + 기본 1개 항목
+(function srInit(){
+  const dEl=document.getElementById('srDate');
+  if(dEl&&!dEl.value){
+    const t=new Date();
+    dEl.value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+  }
+  if(document.getElementById('srItemsWrap')&&document.getElementById('srItemsWrap').children.length===0){
+    srAddItem();
+  }
+})();
+window.srAddItem=srAddItem;
+window.srRemoveItem=srRemoveItem;
+window.srAddDescBlock=srAddDescBlock;
+window.srAddFinalBlock=srAddFinalBlock;
+window.srHandlePhoto=srHandlePhoto;
+window.srClearPhoto=srClearPhoto;
+window.srFastPrint=srFastPrint;
 
 </script>
 
